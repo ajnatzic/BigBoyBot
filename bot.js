@@ -32,13 +32,21 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     to: channelID,
                     message: 'Pong!'
 				});
+			break;
+			
 			case 'greeting':
 				bot.sendMessage({
 					to: channelID,
 					message: 'Welcome to the Club.'
 				});
-            break;
-            // TODO Add more commands
+			break;
+			
+			default:
+				bot.sendMessage({
+					to: channelID,
+					message: 'ERROR: Unknow command. Try typing something that makes sense idiot'
+				});
+			break;
          }
      }
 });

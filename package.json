@@ -1,8 +1,10 @@
 {
-"name": "greeter-bot",
-"version": "1.0.0",
-"description": "A bot for the Big Boys Club server",
-"main": "bot.js",
-"author": "AJ Natzic",
-"dependencies": {}
+  "name": "greeter-bot",
+  "version": "1.0.0",
+  "description": "A bot for the Big Boys Club server",
+  "main": "bot.js",
+  "author": "AJ Natzic",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
 }

@@ -60,6 +60,33 @@ client.on("message", async message => {
 	message.channel.send(`There are currently ${client.users.size} members in this server!`);
   }
 
+  // Tells the user when a person joined
+  if(command === "joined"){
+	const member = message.mentions.members.first();
+	
+	// If only "!joined" is typed with no user, or user is invalid
+	if(!member) {
+		const author = member(message.author);
+		message.channel.send(`${author} joined the server on ${author.joinedAt}`);	//FIXME: only !joined does not work
+	}
+	// Otherwise, find the user inputted
+	else {
+		message.channel.send(`${member} joined the server on ${member.joinedAt}`);
+	}
+  }
+
+  // Tells the user if the mentioned member is a bot
+  // TODO: allow users to @ other people and check if their bots
+  if(command === "botcheck"){
+	const author = message.author;
+	if(author.bot) {
+	  message.channel.send(`${author} is a bot!`);
+	}
+	else {
+		message.channel.send(`${author} is not a bot!`);
+	}
+  }
+
   if(command === "kick") {
     // This command must be limited to mods and admins. In this example we just hardcode the role names.
     // Please read on Array.some() to understand this bit:

@@ -36,7 +36,7 @@ client.on("message", async message => {
 
   // Seperate arguments and commands
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
+  const command = args.shift().toLowerCase();	// all commands are lowercase, but can be called in discord in uppercase
 
   // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
   // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
@@ -57,8 +57,7 @@ client.on("message", async message => {
 
   // Returns the amount of users in the server
   if(command === "usercount"){
-	const numUsers = client.users.size;
-	message.channel.send(`There are currently ${numUsers} members in this server!`);
+	message.channel.send(`There are currently ${client.users.size} members in this server!`);
   }
 
   if(command === "kick") {

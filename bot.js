@@ -4,6 +4,7 @@ const auth = require('./auth.json');
 // Initialize Discord Bot
 const client = new Discord.Client();
 
+
 const config = require("./auth.json");
 
 client.on("ready", () => {
@@ -60,6 +61,14 @@ client.on("message", async message => {
 	message.channel.send(`There are currently ${client.users.size} members in this server!`);
   }
 
+  // Returns the amount of messages in a specific channel
+  if(command === "msgcount") {
+	numMsg = new Discord.MessageCollector(message.channel);
+	console.log(numMsg);
+	if(numMsg.ended)
+	message.channel.send(`There are currently ${numMsg} messages in this server!`);
+  }
+
   // Tells the user when a person joined
   if(command === "joined"){
 	const member = message.mentions.members.first();
@@ -102,7 +111,7 @@ client.on("message", async message => {
     // This command must be limited to mods and admins. In this example we just hardcode the role names.
     // Please read on Array.some() to understand this bit:
     // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/some?
-    if(!message.member.roles.some(r=>["Administrator", "Moderator"].includes(r.name)) )
+    if(!message.member.roles.some(r=>["The Biggest Boys", "Big Boys"].includes(r.name)) )
       return message.reply("Sorry, you don't have permissions to use this!");
 
     // Let's first check if we have a member and if we can kick them!
@@ -128,7 +137,7 @@ client.on("message", async message => {
 
   // Most of this command is identical to kick, except that here we'll only let admins do it.
   if(command === "ban") {
-    if(!message.member.roles.some(r=>["Administrator"].includes(r.name)) )
+    if(!message.member.roles.some(r=>["The Biggest Boys"].includes(r.name)) )
       return message.reply("Sorry, you don't have permissions to use this!");
 
     let member = message.mentions.members.first();
@@ -148,6 +157,9 @@ client.on("message", async message => {
   // This command removes all messages from all users in the channel, up to 500.
   if(command === "purge") {
 
+	if(!message.member.roles.some(r=>["The Biggest Boys"].includes(r.name)) )
+	  return message.reply("Sorry, you don't have permissions to use this!");
+	  
     // get the delete count, as an actual number.
     const deleteCount = parseInt(args[0], 10);
 

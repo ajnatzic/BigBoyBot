@@ -66,8 +66,8 @@ client.on("message", async message => {
 	
 	// If only "!joined" is typed with no user, or user is invalid
 	if(!member) {
-		const author = member(message.author);
-		message.channel.send(`${author} joined the server on ${author.joinedAt}`);	//FIXME: only !joined does not work
+		const author = message.member;
+		message.channel.send(`${author} joined the server on ${author.joinedAt}`);
 	}
 	// Otherwise, find the user inputted
 	else {

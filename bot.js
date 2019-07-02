@@ -76,14 +76,25 @@ client.on("message", async message => {
   }
 
   // Tells the user if the mentioned member is a bot
-  // TODO: allow users to @ other people and check if their bots
+  // Only checks if user has the "Bots" role. Not if it's actually a bot.
   if(command === "botcheck"){
+	const user = message.mentions.members.first();
 	const author = message.author;
-	if(author.bot) {
-	  message.channel.send(`${author} is a bot!`);
+	if(!user) {
+		if(message.member.roles.some(r=>["Bots"].includes(r.name))) {
+		message.channel.send(`${author} is a bot!`);
+		}
+		else {
+			message.channel.send(`${author} is not a bot!`);
+		}
 	}
 	else {
-		message.channel.send(`${author} is not a bot!`);
+		if(user.roles.some(r=>["Bots"].includes(r.name))) {
+		message.channel.send(`${user} is a bot!`);
+		}
+		else {
+			message.channel.send(`${user} is not a bot!`);
+		}
 	}
   }
 

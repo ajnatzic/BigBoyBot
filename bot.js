@@ -63,10 +63,13 @@ client.on("message", async message => {
 
   // Returns the amount of messages in a specific channel
   if(command === "msgcount") {
-	numMsg = new Discord.MessageCollector(message.channel);
-	console.log(numMsg);
-	if(numMsg.ended)
-	message.channel.send(`There are currently ${numMsg} messages in this server!`);
+	message.channel.fetchMessages({limit: 10000})	//FIXME can only count to 100 messages
+  		.then(messages => message.channel.send(`There are currently ${messages.size} messages in this server!`))
+  		.catch(console.error);
+  }
+
+  if(command === "default"){
+	  message.channel.send(`https://cdn.discordapp.com/attachments/553401247948996608/566611034090110977/a3229cf.gif`);
   }
 
   // Tells the user when a person joined

@@ -68,6 +68,7 @@ client.on("message", async message => {
   		.catch(console.error);
   }
 
+  // Returns the link to a default dance gif, yeehaw
   if(command === "default"){
 	  message.channel.send(`https://cdn.discordapp.com/attachments/553401247948996608/566611034090110977/a3229cf.gif`);
   }

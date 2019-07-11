@@ -2,7 +2,7 @@
 ### How to run:
 1. Clone this repository in a preferred directory
 2. Make sure you have node.js installed. Use `node --version` to check https://nodejs.org/en/
-3. Enter your access key into auth.json, obtained from discord developer portal (ommitted for security, ask @ajnatzic on how to get this).
+3. Enter your access key into auth.json, obtained from discord developer portal (ommitted for security, google how to get your own server access key from discord).
 4. Run the bot using this command in the repository directory: `node bot.js`
 
 ### Commiting to this repository:

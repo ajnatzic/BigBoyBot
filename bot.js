@@ -38,6 +38,29 @@ client.on("message", async message => {
   // Seperate arguments and commands
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();	// all commands are lowercase, but can be called in discord in uppercase
+  
+  const commandsList = {
+	"ping": "Tells you the current ping of the bot, as well as the API latency.",
+	"say [message]": "The bot will parrot anything that is typed in place of [message].",
+	"usercount": "Gives you the current amount of users in the server.",
+	"msgcount": "Tells you how many messages have been sent in the entire server.",
+	"default": "Yeehaw",
+	"joined [@user]": "Use this command in conjunction with an [@user] to see when a specific user joined the server. Or just use the command by itself to see when you joined.",
+	"botcheck [@user]": "Use this command to see if a user has the 'bot' role. Use the command by itself to see if you have the bot role.",
+	"kick [@user] [reason]": "Use this command to kick someone. You can only do this if you have admin permissions.",
+	"ban [@user] [reason]": "Use this command to ban someone. You can only do this if you have admin permissions.",
+	"purge [number]": "Delete between 2 and 500 messages in a channel."
+  }
+
+  // Gives the user a list of commands as well as a description on how to use them
+  if(command === "help"){
+		  var menu = (`Help menu
+		  --------------------------------------------------------------------\n`);
+	  for(var key in commandsList) {
+		  menu += (`?${key} | ${commandsList[key]}\n`);
+	  }
+	  message.channel.send(menu);
+  }
 
   // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
   // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)

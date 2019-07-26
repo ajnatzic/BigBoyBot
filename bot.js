@@ -70,7 +70,7 @@ client.on("message", async message => {
 
   // Returns the link to a default dance gif, yeehaw
   if(command === "default"){
-	  message.channel.send(`https://cdn.discordapp.com/attachments/553401247948996608/566611034090110977/a3229cf.gif`);
+	  message.channel.send({files: ["https://cdn.discordapp.com/attachments/553401247948996608/566611034090110977/a3229cf.gif"]});
   }
 
   // Tells the user when a person joined

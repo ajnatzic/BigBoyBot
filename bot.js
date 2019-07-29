@@ -40,6 +40,7 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();	// all commands are lowercase, but can be called in discord in uppercase
   
   const commandsList = {
+	"help": "Displays this help menu.",
 	"ping": "Tells you the current ping of the bot, as well as the API latency.",
 	"say [message]": "The bot will parrot anything that is typed in place of [message].",
 	"usercount": "Gives you the current amount of users in the server.",

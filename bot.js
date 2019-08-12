@@ -32,8 +32,79 @@ client.on("message", async message => {
   // Ignores commands from itself and other bots
   if(message.author.bot) return;
 
-  // Ignores any message that does not contain the prefix defined in "auth.json"
-  if(message.content.indexOf(config.prefix) !== 0) return;
+  // Actions that the bot will execute if the command prefix '?' is not at the beginning of a message (a plain message)
+  if(message.content.indexOf(config.prefix) !== 0) {
+
+    // Get the msg text and convert it to lowercase
+    const msgText = message.content.toLowerCase();
+
+    // Get the user mentioned TODO: make it so users mentioned will also get a react
+    const userMention = message.mentions.members;
+
+    // Check if the message includes 'bot' or 'chad'
+    if(msgText.includes("bot") || msgText.includes("chad") || msgText.includes(userMention))
+    {
+      const emoji = message.guild.emojis.find(emoji => emoji.name === 'chad');
+
+      message.react(emoji);
+    }
+    // Check if the message includes 'aj'
+    if(msgText.includes("aj") || msgText.includes(userMention))
+    {
+      // An array containing the list of emojis related to aj, change as emojis are added
+      const ajEmojis = ['yeehaw', 'slickAJ', 'KittenDisease'];
+      const min = 0; 
+      const max = ajEmojis.length;  
+      const random = Math.floor(Math.random() * (+max - +min)) + +min;
+
+      // Find a random emoji 
+      const emoji = message.guild.emojis.find(emoji => emoji.name === ajEmojis[random]);
+
+      message.react(emoji);
+    }
+    // Check if the message includes 'michael', 'mikol' or 'mike'
+    if(message.content.toLowerCase().includes("michael") || message.content.toLowerCase().includes("mikol") || message.content.toLowerCase().includes("mike"))
+    {
+      // An array containing the list of emojis related to michael, change as emojis are added
+      const mikeEmojis = ['mikeZoinked', 'mikeSleep', 'mikeEZ', 'ProtectorOfVirginity'];
+      const min = 0; 
+      const max = mikeEmojis.length;  
+      const random = Math.floor(Math.random() * (+max - +min)) + +min;
+
+      // Find a random emoji 
+      const emoji = message.guild.emojis.find(emoji => emoji.name === mikeEmojis[random]);
+
+      message.react(emoji);
+    }
+    // Check if the message includes 'connor'
+    if(message.content.toLowerCase().includes("connor"))
+    {
+      const emoji = message.guild.emojis.find(emoji => emoji.name === 'ConnorWut');
+      message.react(emoji);
+    }
+    // Check if the message includes 'grant'
+    if(message.content.toLowerCase().includes("grant"))
+    {
+      // An array containing the list of emojis related to grant, change as emojis are added
+      const grantEmojis = ['grantKappa', 'GrantFused'];
+      const min = 0; 
+      const max = grantEmojis.length;  
+      const random = Math.floor(Math.random() * (+max - +min)) + +min;
+
+      // Find a random emoji 
+      const emoji = message.guild.emojis.find(emoji => emoji.name === grantEmojis[random]);
+
+      message.react(emoji);
+    }
+    // Check if the message includes 'walter'
+    if(message.content.toLowerCase().includes("walter"))
+    {
+      const emoji = message.guild.emojis.find(emoji => emoji.name === 'walter');
+      message.react(emoji);
+    }
+    // Return so that the below commands are not checked (since there's no command prefix)
+    return;
+  }
 
   // Seperate arguments and commands
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);

@@ -48,9 +48,9 @@ client.on("message", async message => {
 	"default": "Yeehaw",
 	"joined [@user]": "Use this command in conjunction with an [@user] to see when a specific user joined the server. Or just use the command by itself to see when you joined.",
 	"botcheck [@user]": "Use this command to see if a user has the 'bot' role. Use the command by itself to see if you have the bot role.",
-	"kick [@user] [reason]": "Use this command to kick someone. You can only do this if you have admin permissions.",
-	"ban [@user] [reason]": "Use this command to ban someone. You can only do this if you have admin permissions.",
-	"purge [number]": "Delete between 2 and 500 messages in a channel."
+	"kick [@user] [reason]": "Use this command to kick someone. You must be one of the biggest boys to do this.",
+	"ban [@user] [reason]": "Use this command to ban someone. You must be one of the biggest boys to do this.",
+	"purge [number]": "Delete between 2 and 500 messages in a channel. You must be a big boy to do this."
   }
 
   // Gives the user a list of commands as well as a description on how to use them
@@ -139,7 +139,7 @@ client.on("message", async message => {
     // This command must be limited to mods and admins. In this example we just hardcode the role names.
     // Please read on Array.some() to understand this bit:
     // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/some?
-    if(!message.member.roles.some(r=>["The Biggest Boys", "Big Boys"].includes(r.name)) )
+    if(!message.member.roles.some(r=>["The Biggest Boys"].includes(r.name)) )
       return message.reply("Sorry, you don't have permissions to use this!");
 
     // Let's first check if we have a member and if we can kick them!
@@ -185,7 +185,7 @@ client.on("message", async message => {
   // This command removes all messages from all users in the channel, up to 500.
   if(command === "purge") {
 
-	if(!message.member.roles.some(r=>["The Biggest Boys"].includes(r.name)) )
+	if(!message.member.roles.some(r=>["Big Boys"].includes(r.name)) )
 	  return message.reply("Sorry, you don't have permissions to use this!");
 	  
     // get the delete count, as an actual number.

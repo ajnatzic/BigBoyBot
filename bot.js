@@ -143,7 +143,7 @@ client.on('message', async message => {
     case 'say':
         const sayMessage = args.join(' ');
         // Then we delete the command message.
-        message.delete().catch(O_O => { });
+        message.delete().catch(() => { });
         // And we get the bot to say something:
         message.channel.send(sayMessage);
         break;

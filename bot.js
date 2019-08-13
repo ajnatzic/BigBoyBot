@@ -94,7 +94,8 @@ client.on("message", async message => {
     // Check if the message includes 'walter'
     if (message.content.toLowerCase().includes("walter")) {
       const emoji = message.guild.emojis.find(emoji => emoji.name === 'walter');
-      message.react(emoji);
+      message.channel.send(`${emoji}`);
+      message.channel.send("Walter");
     }
     // Return so that the below commands are not checked (since there's no command prefix)
     return;

@@ -7,8 +7,8 @@ const client = new Discord.Client();
 // Checks the authorization key and command prefix
 const config = require('./auth.json');
 
+// This event will run if the bot starts, and logs in, successfully.
 client.on('ready', () => {
-    // This event will run if the bot starts, and logs in, successfully.
     console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} servers.`);
     client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
@@ -19,7 +19,7 @@ client.on('guildCreate', server => {
     client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
-// this event triggers when the bot is removed from a server.
+// This event triggers when the bot is removed from a server.
 client.on('guildDelete', server => {
     console.log(`I have been removed from: ${server.name} (id: ${server.id})`);
     client.user.setActivity(`Serving ${client.guilds.size} servers`);
@@ -98,7 +98,7 @@ client.on('message', async message => {
         return;
     }
 
-    // Seperate arguments and commands
+    // Separate arguments and commands
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     // All commands are lowercase, but can be called in discord in uppercase
     const command = args.shift().toLowerCase();
@@ -199,10 +199,10 @@ client.on('message', async message => {
         }
         break;
 
+    // This command must be limited to mods and admins. In this example we just hardcode the role names.
+    // Please read on Array.some() to understand this bit:
+    // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/some?
     case 'kick':
-        // This command must be limited to mods and admins. In this example we just hardcode the role names.
-        // Please read on Array.some() to understand this bit:
-        // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/some?
         if (!message.member.roles.some(r => ['The Biggest Boys'].includes(r.name))) {
             return message.reply('Sorry, you don\'t have permissions to use this!');
         }
@@ -253,6 +253,7 @@ client.on('message', async message => {
         break;
 
     // This command removes all messages from all users in the channel, up to 500.
+    // This can only be used by Big Boys
     case 'purge':
         if (!message.member.roles.some(r => ['Big Boys'].includes(r.name))) {
             return message.reply('Sorry, you don\'t have permissions to use this!');
@@ -270,7 +271,7 @@ client.on('message', async message => {
         message.channel.bulkDelete(fetched)
             .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
         break;
-
+    // Sends a message that contains a permanent invite link
     case 'invite':
         message.reply('Here is the permanent invite link to the server:\n https://discord.gg/M86FBc8');
         break;

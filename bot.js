@@ -116,7 +116,8 @@ client.on("message", async message => {
     "botcheck [@user]": "Use this command to see if a user has the 'bot' role. Use the command by itself to see if you have the bot role.",
     "kick [@user] [kickReason]": "Use this command to kick someone. You must be one of the biggest boys to do this.",
     "ban [@user] [banReason]": "Use this command to ban someone. You must be one of the biggest boys to do this.",
-    "purge [number]": "Delete between 2 and 500 messages in a channel. You must be a big boy to do this."
+    "purge [number]": "Delete between 2 and 500 messages in a channel. You must be a big boy to do this.",
+    "invite": "Get the permanent invite link to the server. This link can be used forever."
   }
 
   // Var used to store mentioned member IDs from a message
@@ -266,6 +267,10 @@ client.on("message", async message => {
       const fetched = await message.channel.fetchMessages({ limit: deleteCount });
       message.channel.bulkDelete(fetched)
         .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
+      break;
+    
+    case "invite":
+      message.reply("Here is the permanent invite link to the server:\n https://discord.gg/M86FBc8");
       break;
 
     // If the command is not recognized

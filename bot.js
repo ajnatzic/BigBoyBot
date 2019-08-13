@@ -1,9 +1,10 @@
+// Import discord.js
 const Discord = require('discord.js');
 
-const auth = require('./auth.json');
 // Initialize Discord Bot
 const client = new Discord.Client();
 
+// Checks the authorization key and command prefix
 const config = require('./auth.json');
 
 client.on('ready', () => {

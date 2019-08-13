@@ -4,30 +4,29 @@ const auth = require('./auth.json');
 // Initialize Discord Bot
 const client = new Discord.Client();
 
+const config = require('./auth.json');
 
-const config = require("./auth.json");
-
-client.on("ready", () => {
+client.on('ready', () => {
   // This event will run if the bot starts, and logs in, successfully.
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} servers.`);
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
 // This event triggers when the bot joins a server.
-client.on("guildCreate", server => {
+client.on('guildCreate', server => {
   console.log(`New server joined: ${server.name} (id: ${server.id}). This server has ${server.memberCount} members!`);
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
 // this event triggers when the bot is removed from a server.
-client.on("guildDelete", server => {
+client.on('guildDelete', server => {
   console.log(`I have been removed from: ${server.name} (id: ${server.id})`);
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
 
 // This event will run on every single message received, from any channel or DM.
-client.on("message", async message => {
+client.on('message', async message => {
 
   // Ignores commands from itself and other bots
   if (message.author.bot) return;
@@ -42,13 +41,13 @@ client.on("message", async message => {
     const userMention = message.mentions.members;
 
     // Check if the message includes 'bot' or 'chad'
-    if (msgText.includes("bot") || msgText.includes("chad") || msgText.includes(userMention)) {
+    if (msgText.includes('bot') || msgText.includes('chad') || msgText.includes(userMention)) {
       const emoji = message.guild.emojis.find(emoji => emoji.name === 'chad');
 
       message.react(emoji);
     }
     // Check if the message includes 'aj'
-    if (msgText.includes("aj") || msgText.includes(userMention)) {
+    if (msgText.includes('aj') || msgText.includes(userMention)) {
       // An array containing the list of emojis related to aj, change as emojis are added
       const ajEmojis = ['yeehaw', 'slickAJ', 'KittenDisease'];
       const min = 0;
@@ -61,7 +60,7 @@ client.on("message", async message => {
       message.react(emoji);
     }
     // Check if the message includes 'michael', 'mikol' or 'mike'
-    if (message.content.toLowerCase().includes("michael") || message.content.toLowerCase().includes("mikol") || message.content.toLowerCase().includes("mike")) {
+    if (message.content.toLowerCase().includes('michael') || message.content.toLowerCase().includes('mikol') || message.content.toLowerCase().includes('mike')) {
       // An array containing the list of emojis related to michael, change as emojis are added
       const mikeEmojis = ['mikeZoinked', 'mikeSleep', 'mikeEZ', 'ProtectorOfVirginity'];
       const min = 0;
@@ -74,12 +73,12 @@ client.on("message", async message => {
       message.react(emoji);
     }
     // Check if the message includes 'connor'
-    if (message.content.toLowerCase().includes("connor")) {
+    if (message.content.toLowerCase().includes('connor')) {
       const emoji = message.guild.emojis.find(emoji => emoji.name === 'ConnorWut');
       message.react(emoji);
     }
     // Check if the message includes 'grant'
-    if (message.content.toLowerCase().includes("grant")) {
+    if (message.content.toLowerCase().includes('grant')) {
       // An array containing the list of emojis related to grant, change as emojis are added
       const grantEmojis = ['grantKappa', 'GrantFused'];
       const min = 0;
@@ -92,10 +91,10 @@ client.on("message", async message => {
       message.react(emoji);
     }
     // Check if the message includes 'walter'
-    if (message.content.toLowerCase().includes("walter")) {
+    if (message.content.toLowerCase().includes('walter')) {
       const emoji = message.guild.emojis.find(emoji => emoji.name === 'walter');
       message.channel.send(`${emoji}`);
-      message.channel.send("Walter");
+      message.channel.send('Walter');
     }
     // Return so that the below commands are not checked (since there's no command prefix)
     return;
@@ -106,25 +105,25 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();	// all commands are lowercase, but can be called in discord in uppercase
 
   const commandsList = {
-    "help": "Displays this help menu.",
-    "ping": "Tells you the current ping of the bot, as well as the API latency.",
-    "say [message]": "The bot will parrot anything that is typed in place of [message].",
-    "usercount": "Gives you the current amount of users in the server.",
-    "msgcount": "Tells you how many messages have been sent in the entire server.",
-    "default": "Yeehaw",
-    "joined [@user]": "Use this command in conjunction with an [@user] to see when a specific user joined the server. Or just use the command by itself to see when you joined.",
-    "botcheck [@user]": "Use this command to see if a user has the 'bot' role. Use the command by itself to see if you have the bot role.",
-    "kick [@user] [kickReason]": "Use this command to kick someone. You must be one of the biggest boys to do this.",
-    "ban [@user] [banReason]": "Use this command to ban someone. You must be one of the biggest boys to do this.",
-    "purge [number]": "Delete between 2 and 500 messages in a channel. You must be a big boy to do this.",
-    "invite": "Get the permanent invite link to the server. This link can be used forever."
+    'help': 'Displays this help menu.',
+    'ping': 'Tells you the current ping of the bot, as well as the API latency.',
+    'say [message]': 'The bot will parrot anything that is typed in place of [message].',
+    'usercount': 'Gives you the current amount of users in the server.',
+    'msgcount': 'Tells you how many messages have been sent in the entire server.',
+    'default': 'Yeehaw',
+    'joined [@user]': 'Use this command in conjunction with an [@user] to see when a specific user joined the server. Or just use the command by itself to see when you joined.',
+    'botcheck [@user]': 'Use this command to see if a user has the \'bot\' role. Use the command by itself to see if you have the bot role.',
+    'kick [@user] [kickReason]': 'Use this command to kick someone. You must be one of the biggest boys to do this.',
+    'ban [@user] [banReason]': 'Use this command to ban someone. You must be one of the biggest boys to do this.',
+    'purge [number]': 'Delete between 2 and 500 messages in a channel. You must be a big boy to do this.',
+    'invite': 'Get the permanent invite link to the server. This link can be used forever.'
   }
 
   // Var used to store mentioned member IDs from a message
   let member;
   switch (command) {
     // Gives the user a list of commands as well as a description on how to use them
-    case "help":
+    case 'help':
       var menu = (`Help menu
         --------------------------------------------------------------------\n`);
       for (var key in commandsList) {
@@ -135,15 +134,15 @@ client.on("message", async message => {
 
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
     // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
-    case "ping":
-      const m = await message.channel.send("Calculating ping...");
+    case 'ping':
+      const m = await message.channel.send('Calculating ping...');
       m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
       break;
 
     // makes the bot say something and delete the message. As an example, it's open to anyone to use.
-    // To get the "message" itself we join the `args` back into a string with spaces:
-    case "say":
-      const sayMessage = args.join(" ");
+    // To get the 'message' itself we join the `args` back into a string with spaces:
+    case 'say':
+      const sayMessage = args.join(' ');
       // Then we delete the command message.
       message.delete().catch(O_o => { });
       // And we get the bot to say something:
@@ -151,27 +150,27 @@ client.on("message", async message => {
       break;
 
     // Returns the amount of users in the server
-    case "usercount":
+    case 'usercount':
       message.channel.send(`There are currently ${client.users.size} members in this server!`);
       break;
 
     // Returns the amount of messages in a specific channel
-    case "msgcount":
+    case 'msgcount':
       message.channel.fetchMessages({ limit: 10000 })	//FIXME can only count to 100 messages
         .then(messages => message.channel.send(`There are currently ${messages.size} messages in this server!`))
         .catch(console.error);
       break;
 
     // Returns the link to a default dance gif, yeehaw
-    case "default": // Note: NOT the default case, the command is literally called default
-      message.channel.send({ files: ["https://cdn.discordapp.com/attachments/553401247948996608/566611034090110977/a3229cf.gif"] });
+    case 'default': // Note: NOT the default case, the command is literally called default
+      message.channel.send({ files: ['https://cdn.discordapp.com/attachments/553401247948996608/566611034090110977/a3229cf.gif'] });
       break;
 
     // Tells the user when a person joined
-    case "joined":
+    case 'joined':
       member = message.mentions.members.first();
 
-      // If only "!joined" is typed with no user, or user is invalid
+      // If only '!joined' is typed with no user, or user is invalid
       if (!member) {
         const author = message.member;
         message.channel.send(`${author} joined the server on ${author.joinedAt}`);
@@ -183,12 +182,12 @@ client.on("message", async message => {
       break;
 
     // Tells the user if the mentioned member is a bot
-    // Only checks if user has the "Bots" role. Not if it's actually a bot.
-    case "botcheck":
+    // Only checks if user has the 'Bots' role. Not if it's actually a bot.
+    case 'botcheck':
       const user = message.mentions.members.first();
       const author = message.author;
       if (!user) {
-        if (message.member.roles.some(r => ["Bots"].includes(r.name))) {
+        if (message.member.roles.some(r => ['Bots'].includes(r.name))) {
           message.channel.send(`${author} is a bot!`);
         }
         else {
@@ -196,7 +195,7 @@ client.on("message", async message => {
         }
       }
       else {
-        if (user.roles.some(r => ["Bots"].includes(r.name))) {
+        if (user.roles.some(r => ['Bots'].includes(r.name))) {
           message.channel.send(`${user} is a bot!`);
         }
         else {
@@ -205,26 +204,26 @@ client.on("message", async message => {
       }
       break;
 
-    case "kick":
+    case 'kick':
       // This command must be limited to mods and admins. In this example we just hardcode the role names.
       // Please read on Array.some() to understand this bit:
       // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/some?
-      if (!message.member.roles.some(r => ["The Biggest Boys"].includes(r.name)))
-        return message.reply("Sorry, you don't have permissions to use this!");
+      if (!message.member.roles.some(r => ['The Biggest Boys'].includes(r.name)))
+        return message.reply('Sorry, you don\'t have permissions to use this!');
 
       // Let's first check if we have a member and if we can kick them!
       // message.mentions.members is a collection of people that have been mentioned, as GuildMembers.
       // We can also support getting the member by ID, which would be args[0]
       member = message.mentions.members.first() || message.server.members.get(args[0]);
       if (!member)
-        return message.reply("Please mention a valid member of this server");
+        return message.reply('Please mention a valid member of this server');
       if (!member.kickable)
-        return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
+        return message.reply('I cannot kick this user! Do they have a higher role? Do I have kick permissions?');
 
       // slice(1) removes the first part, which here should be the user mention or ID
       // join(' ') takes all the various parts to make it a single string.
       let kickReason = args.slice(1).join(' ');
-      if (!kickReason) kickReason = "No kick reason provided";
+      if (!kickReason) kickReason = 'No kick reason provided';
 
       // Attempt to kick the member, throw error if not possible
       await member.kick(kickReason)
@@ -234,18 +233,18 @@ client.on("message", async message => {
       break;
 
     // Most of this command is identical to kick, except that here we'll only let admins do it.
-    case "ban":
-      if (!message.member.roles.some(r => ["The Biggest Boys"].includes(r.name)))
-        return message.reply("Sorry, you don't have permissions to use this!");
+    case 'ban':
+      if (!message.member.roles.some(r => ['The Biggest Boys'].includes(r.name)))
+        return message.reply('Sorry, you don\'t have permissions to use this!');
 
       member = message.mentions.members.first();
       if (!member)
-        return message.reply("Please mention a valid member of this server");
+        return message.reply('Please mention a valid member of this server');
       if (!member.bannable)
-        return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
+        return message.reply('I cannot ban this user! Do they have a higher role? Do I have ban permissions?');
 
       let banReason = args.slice(1).join(' ');
-      if (!banReason) banReason = "No ban reason provided";
+      if (!banReason) banReason = 'No ban reason provided';
 
       await member.ban(banReason)
         .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
@@ -253,15 +252,15 @@ client.on("message", async message => {
       break;
 
     // This command removes all messages from all users in the channel, up to 500.
-    case "purge":
-      if (!message.member.roles.some(r => ["Big Boys"].includes(r.name)))
-        return message.reply("Sorry, you don't have permissions to use this!");
+    case 'purge':
+      if (!message.member.roles.some(r => ['Big Boys'].includes(r.name)))
+        return message.reply('Sorry, you don\'t have permissions to use this!');
 
       // get the delete count, as an actual number.
       const deleteCount = parseInt(args[0], 10);
 
       if (!deleteCount || deleteCount < 2 || deleteCount > 500)
-        return message.reply("Please provide a number between 2 and 500 for the number of messages to delete");
+        return message.reply('Please provide a number between 2 and 500 for the number of messages to delete');
 
       // So we get our messages, and delete them. Simple enough, right?
       const fetched = await message.channel.fetchMessages({ limit: deleteCount });
@@ -269,13 +268,13 @@ client.on("message", async message => {
         .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
       break;
     
-    case "invite":
-      message.reply("Here is the permanent invite link to the server:\n https://discord.gg/M86FBc8");
+    case 'invite':
+      message.reply('Here is the permanent invite link to the server:\n https://discord.gg/M86FBc8');
       break;
 
     // If the command is not recognized
     default:
-      return message.channel.send("Honestly, I have no idea what that means. Use \"?help\" to see the list of commands.");
+      return message.channel.send('Honestly, I have no idea what that means. Use \'?help\' to see the list of commands.');
   }
 });
 

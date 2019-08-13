@@ -28,7 +28,9 @@ client.on('guildDelete', server => {
 // This event will run on every single message received, from any channel or DM.
 client.on('message', async message => {
     // Ignores commands from itself and other bots
-    if (message.author.bot) return;
+    if (message.author.bot) {
+        return;
+    }
 
     // Actions that the bot will execute if the command prefix '?' is not at the beginning of a message (a plain message)
     if (message.content.indexOf(config.prefix) !== 0) {
@@ -133,20 +135,22 @@ client.on('message', async message => {
 
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
     // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
-    case 'ping':
+    case 'ping': {
         const m = await message.channel.send('Calculating ping...');
         m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
         break;
+    }
 
     // makes the bot say something and delete the message. As an example, it's open to anyone to use.
     // To get the 'message' itself we join the `args` back into a string with spaces:
-    case 'say':
+    case 'say': {
         const sayMessage = args.join(' ');
         // Then we delete the command message.
         message.delete().catch(() => { });
         // And we get the bot to say something:
         message.channel.send(sayMessage);
         break;
+    }
 
     // Returns the amount of users in the server
     case 'usercount':
@@ -181,7 +185,7 @@ client.on('message', async message => {
 
     // Tells the user if the mentioned member is a bot
     // Only checks if user has the 'Bots' role. Not if it's actually a bot.
-    case 'botcheck':
+    case 'botcheck': {
         const user = message.mentions.members.first();
         const author = message.author;
         if (!user) {
@@ -198,11 +202,12 @@ client.on('message', async message => {
             }
         }
         break;
+    }
 
     // This command must be limited to mods and admins. In this example we just hardcode the role names.
     // Please read on Array.some() to understand this bit:
     // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/some?
-    case 'kick':
+    case 'kick': {
         if (!message.member.roles.some(r => ['The Biggest Boys'].includes(r.name))) {
             return message.reply('Sorry, you don\'t have permissions to use this!');
         }
@@ -221,7 +226,9 @@ client.on('message', async message => {
         // slice(1) removes the first part, which here should be the user mention or ID
         // join(' ') takes all the various parts to make it a single string.
         let kickReason = args.slice(1).join(' ');
-        if (!kickReason) kickReason = 'No kick reason provided';
+        if (!kickReason) {
+            kickReason = 'No kick reason provided';
+        }
 
         // Attempt to kick the member, throw error if not possible
         await member.kick(kickReason)
@@ -229,9 +236,10 @@ client.on('message', async message => {
         message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${kickReason}`);
 
         break;
+    }
 
     // Most of this command is identical to kick, except that here we'll only let admins do it.
-    case 'ban':
+    case 'ban': {
         if (!message.member.roles.some(r => ['The Biggest Boys'].includes(r.name))) {
             return message.reply('Sorry, you don\'t have permissions to use this!');
         }
@@ -245,16 +253,19 @@ client.on('message', async message => {
         }
 
         let banReason = args.slice(1).join(' ');
-        if (!banReason) banReason = 'No ban reason provided';
+        if (!banReason) {
+            banReason = 'No ban reason provided';
+        }
 
         await member.ban(banReason)
             .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
         message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${banReason}`);
         break;
+    }
 
     // This command removes all messages from all users in the channel, up to 500.
     // This can only be used by Big Boys
-    case 'purge':
+    case 'purge': {
         if (!message.member.roles.some(r => ['Big Boys'].includes(r.name))) {
             return message.reply('Sorry, you don\'t have permissions to use this!');
         }
@@ -271,6 +282,8 @@ client.on('message', async message => {
         message.channel.bulkDelete(fetched)
             .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
         break;
+    }
+
     // Sends a message that contains a permanent invite link
     case 'invite':
         message.reply('Here is the permanent invite link to the server:\n https://discord.gg/M86FBc8');

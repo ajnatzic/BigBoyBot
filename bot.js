@@ -16,6 +16,7 @@ const config = require('./auth.json');
 // Print Welcome message
 console.log('Created by AJ Natzic for the Big Boys Club discord server.'.red);
 console.log('Starting Chad Bot...'.yellow);
+
 // This event will run if the bot starts, and logs in, successfully.
 client.on('ready', () => {
     console.log(`Chad Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} servers.`.bold.green);
@@ -43,25 +44,22 @@ client.on('guildMemberAdd', member => {
 client.on('guildMemberRemove', member => {
     member.guild.channels.get('267848755393331213').send(`${member.user.tag} has left the server.`);
 });
+
 // This event will run on every single message received, from any channel or DM.
 client.on('message', async message => {
     // Ignores commands from itself and other bots
     if (message.author.bot) {
         return;
     }
-
     // Actions that the bot will execute if the command prefix '?' is not at the beginning of a message (a plain message)
     if (message.content.indexOf(config.prefix) !== 0) {
     // Get the msg text and convert it to lowercase
         const msgText = message.content.toLowerCase();
-
         // Get the user mentioned TODO: make it so users mentioned will also get a react
         const userMention = message.mentions.members;
-
         // Check if the message includes 'bot' or 'chad'
         if (msgText.includes('bot') || msgText.includes('chad') || msgText.includes(userMention)) {
             const emoji = message.guild.emojis.find(emoji => emoji.name === 'chad');
-
             message.react(emoji);
         }
         // Check if the message includes 'aj'
@@ -71,10 +69,8 @@ client.on('message', async message => {
             const min = 0;
             const max = ajEmojis.length;
             const random = Math.floor(Math.random() * (+max - +min)) + +min;
-
             // Find a random emoji
             const emoji = message.guild.emojis.find(emoji => emoji.name === ajEmojis[random]);
-
             message.react(emoji);
         }
         // Check if the message includes 'michael', 'mikol' or 'mike'
@@ -84,10 +80,8 @@ client.on('message', async message => {
             const min = 0;
             const max = mikeEmojis.length;
             const random = Math.floor(Math.random() * (+max - +min)) + +min;
-
             // Find a random emoji
             const emoji = message.guild.emojis.find(emoji => emoji.name === mikeEmojis[random]);
-
             message.react(emoji);
         }
         // Check if the message includes 'connor'
@@ -102,10 +96,8 @@ client.on('message', async message => {
             const min = 0;
             const max = grantEmojis.length;
             const random = Math.floor(Math.random() * (+max - +min)) + +min;
-
             // Find a random emoji
             const emoji = message.guild.emojis.find(emoji => emoji.name === grantEmojis[random]);
-
             message.react(emoji);
         }
         // Check if the message includes 'walter'
@@ -122,7 +114,6 @@ client.on('message', async message => {
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     // All commands are lowercase, but can be called in discord in uppercase
     const command = args.shift().toLowerCase();
-
     const commandsList = {
         help: 'Displays this help menu.',
         ping: 'Tells you the current ping of the bot, as well as the API latency.',
@@ -230,7 +221,6 @@ client.on('message', async message => {
         if (!message.member.roles.some(r => ['The Biggest Boys'].includes(r.name))) {
             return message.reply('Sorry, you don\'t have permissions to use this!');
         }
-
         // Let's first check if we have a member and if we can kick them!
         // message.mentions.members is a collection of people that have been mentioned, as GuildMembers.
         // We can also support getting the member by ID, which would be args[0]
@@ -241,19 +231,16 @@ client.on('message', async message => {
         if (!member.kickable) {
             return message.reply('I cannot kick this user! Do they have a higher role? Do I have kick permissions?');
         }
-
         // slice(1) removes the first part, which here should be the user mention or ID
         // join(' ') takes all the various parts to make it a single string.
         let kickReason = args.slice(1).join(' ');
         if (!kickReason) {
             kickReason = 'No kick reason provided';
         }
-
         // Attempt to kick the member, throw error if not possible
         await member.kick(kickReason)
             .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
         message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${kickReason}`);
-
         break;
     }
 
@@ -262,7 +249,6 @@ client.on('message', async message => {
         if (!message.member.roles.some(r => ['The Biggest Boys'].includes(r.name))) {
             return message.reply('Sorry, you don\'t have permissions to use this!');
         }
-
         member = message.mentions.members.first();
         if (!member) {
             return message.reply('Please mention a valid member of this server');
@@ -270,12 +256,10 @@ client.on('message', async message => {
         if (!member.bannable) {
             return message.reply('I cannot ban this user! Do they have a higher role? Do I have ban permissions?');
         }
-
         let banReason = args.slice(1).join(' ');
         if (!banReason) {
             banReason = 'No ban reason provided';
         }
-
         await member.ban(banReason)
             .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
         message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${banReason}`);
@@ -288,14 +272,11 @@ client.on('message', async message => {
         if (!message.member.roles.some(r => ['Big Boys'].includes(r.name))) {
             return message.reply('Sorry, you don\'t have permissions to use this!');
         }
-
         // get the delete count, as an actual number.
         const deleteCount = parseInt(args[0], 10);
-
         if (!deleteCount || deleteCount < 2 || deleteCount > 500) {
             return message.reply('Please provide a number between 2 and 500 for the number of messages to delete');
         }
-
         // So we get our messages, and delete them. Simple enough, right?
         const fetched = await message.channel.fetchMessages({ limit: deleteCount });
         message.channel.bulkDelete(fetched)

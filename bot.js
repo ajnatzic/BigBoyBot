@@ -136,6 +136,7 @@ client.on('message', async message => {
         'ban [@user] [banReason]': 'Use this command to ban someone. You must be one of the biggest boys to do this.',
         'purge [number]': 'Delete between 2 and 500 messages in a channel. You must be a big boy to do this.',
         invite: 'Get the permanent invite link to the server. This link can be used forever.',
+        github: 'Get the link to this bot\'s github repository.',
     };
 
     // Var used to store mentioned member IDs from a message
@@ -305,6 +306,11 @@ client.on('message', async message => {
     // Sends a message that contains a permanent invite link
     case 'invite':
         message.reply('Here is the permanent invite link to the server:\n https://discord.gg/M86FBc8');
+        break;
+
+    // Sends a message that contains the github repository for this bot
+    case 'github':
+        message.reply('https://github.com/ajnatzic/BigBoyBot');
         break;
 
     // If the command is not recognized

@@ -2,13 +2,7 @@
 ### How to run:
 1. Clone this repository in a preferred directory
 2. Make sure you have node.js installed. Use `node --version` to check https://nodejs.org/en/
-3. Enter your access key into auth.json, obtained from discord developer portal (ommitted for security, google how to get your own server access key from discord). Also, enter your command prefix. For example, your auth.json may look like this:
-```json
-{
-"token": "GetBotTokenFromHere:https://discordapp.com/developers/applications/",
-"prefix": "!"
-}
-```
+3. Enter your bot token into `auth.json`, obtained from discord developer portal. Also, enter your command prefix. See the `auth.json` file to learn how to get your bot token.
 4. Run the bot using this command in the repository directory: `node bot.js`
 
 ### Commiting to this repository:

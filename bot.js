@@ -1,5 +1,11 @@
 // Import discord.js
+// https://discord.js.org/#/
 const Discord = require('discord.js');
+
+// Import 'colors.js' package, used to colorize node output
+// https://www.npmjs.com/package/colors
+// eslint-disable-next-line no-unused-vars
+const colors = require('colors');
 
 // Initialize Discord Bot
 const client = new Discord.Client();
@@ -7,21 +13,24 @@ const client = new Discord.Client();
 // Checks the authorization key and command prefix
 const config = require('./auth.json');
 
+// Print Welcome message
+console.log('Created by AJ Natzic for the Big Boys Club discord server.'.red);
+console.log('Starting Chad Bot...'.bold.yellow);
 // This event will run if the bot starts, and logs in, successfully.
 client.on('ready', () => {
-    console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} servers.`);
+    console.log(`Chad Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} servers.`.bold.green);
     client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
 // This event triggers when the bot joins a server.
 client.on('guildCreate', server => {
-    console.log(`New server joined: ${server.name} (id: ${server.id}). This server has ${server.memberCount} members!`);
+    console.log(`New server joined: ${server.name} (id: ${server.id}). This server has ${server.memberCount} members!`.bold.yellow);
     client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
 // This event triggers when the bot is removed from a server.
 client.on('guildDelete', server => {
-    console.log(`I have been removed from: ${server.name} (id: ${server.id})`);
+    console.log(`I have been removed from: ${server.name} (id: ${server.id})`.bold.red);
     client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 

@@ -34,6 +34,15 @@ client.on('guildDelete', server => {
     client.user.setActivity('Use \'?help\' for commands');
 });
 
+// This sends a message to the general channel everytime someone joins the server.
+client.on('guildMemberAdd', member => {
+    member.guild.channels.get('267848755393331213').send(`Hey ${member}, welcome to the club.`);
+});
+
+// This sends a message to the general channel everytime someone leaves the server.
+client.on('guildMemberRemove', member => {
+    member.guild.channels.get('267848755393331213').send(`${member.user.tag} has left the server.`);
+});
 // This event will run on every single message received, from any channel or DM.
 client.on('message', async message => {
     // Ignores commands from itself and other bots

@@ -19,19 +19,19 @@ console.log('Starting Chad Bot...'.bold.yellow);
 // This event will run if the bot starts, and logs in, successfully.
 client.on('ready', () => {
     console.log(`Chad Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} servers.`.bold.green);
-    client.user.setActivity(`Serving ${client.guilds.size} servers`);
+    client.user.setActivity('Use \'?help\' for commands');
 });
 
 // This event triggers when the bot joins a server.
 client.on('guildCreate', server => {
     console.log(`New server joined: ${server.name} (id: ${server.id}). This server has ${server.memberCount} members!`.bold.yellow);
-    client.user.setActivity(`Serving ${client.guilds.size} servers`);
+    client.user.setActivity('Use \'?help\' for commands');
 });
 
 // This event triggers when the bot is removed from a server.
 client.on('guildDelete', server => {
     console.log(`I have been removed from: ${server.name} (id: ${server.id})`.bold.red);
-    client.user.setActivity(`Serving ${client.guilds.size} servers`);
+    client.user.setActivity('Use \'?help\' for commands');
 });
 
 // This event will run on every single message received, from any channel or DM.

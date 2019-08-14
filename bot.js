@@ -15,7 +15,7 @@ const config = require('./auth.json');
 
 // Print Welcome message
 console.log('Created by AJ Natzic for the Big Boys Club discord server.'.red);
-console.log('Starting Chad Bot...'.bold.yellow);
+console.log('Starting Chad Bot...'.yellow);
 // This event will run if the bot starts, and logs in, successfully.
 client.on('ready', () => {
     console.log(`Chad Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} servers.`.bold.green);

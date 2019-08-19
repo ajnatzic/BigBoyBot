@@ -308,7 +308,7 @@ client.on('message', async message => {
         message.reply('https://github.com/ajnatzic/BigBoyBot');
         break;
 
-    // Adds a song to the queue
+    // Adds a song to the queue. Displays queue if no url detected
     case 'play':
         execute(message, serverQueue);
         break;
@@ -340,7 +340,18 @@ async function execute(message, serverQueue) {
     if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
         return message.channel.send('I need the permissions to join and speak in your voice channel!');
     }
-
+    if (!args[1]) {
+        if(!serverQueue) {
+            return message.channel.send('The queue is empty.');
+        } else {
+            const queueLength = serverQueue.songs.length;
+            let queueString = 'The current queue:\n';
+            for (let i = 0; i < queueLength; i++) {
+                queueString += `${i + 1}. ${serverQueue.songs[i].title}\n`;
+            }
+            return message.channel.send(queueString);
+        }
+    }
     const songInfo = await ytdl.getInfo(args[1]);
     const song = {
         title: songInfo.title,

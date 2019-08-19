@@ -128,6 +128,7 @@ client.on('message', async message => {
         'purge [number]': 'Delete between 2 and 500 messages in a channel. You must be a big boy to do this.',
         invite: 'Get the permanent invite link to the server. This link can be used forever.',
         github: 'Get the link to this bot\'s github repository.',
+        chad: 'Find out what chad really stands for.',
     };
 
     // Var used to store mentioned member IDs from a message
@@ -293,6 +294,17 @@ client.on('message', async message => {
     case 'github':
         message.reply('https://github.com/ajnatzic/BigBoyBot');
         break;
+
+    //
+    case 'chad': {
+        const fs = require('fs');
+        const expArray = fs.readFileSync('expansions.txt').toString().split('\n');
+        const min = 0;
+        const max = expArray.length;
+        const random = Math.floor(Math.random() * (+max - +min)) + +min;
+        message.channel.send(`Chad: ${expArray[random]}`);
+        break;
+    }
 
     // If the command is not recognized
     default:

@@ -295,7 +295,7 @@ client.on('message', async message => {
         message.reply('https://github.com/ajnatzic/BigBoyBot');
         break;
 
-    //
+    // Pick a random expansion of the word 'chad'
     case 'chad': {
         const fs = require('fs');
         const expArray = fs.readFileSync('expansions.txt').toString().split('\n');

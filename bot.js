@@ -7,11 +7,19 @@ const Discord = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const colors = require('colors');
 
+// Import 'ytdl-core' package, used to download youtube videos to play in the server
+// https://www.npmjs.com/package/ytdl-core
+const ytdl = require('ytdl-core');
+
 // Initialize Discord Bot
 const client = new Discord.Client();
 
 // Checks the authorization key and command prefix
 const config = require('./auth.json');
+
+
+// Map for the song queue
+const queue = new Map();
 
 // Print Welcome message
 console.log('Created by AJ Natzic for the Big Boys Club discord server.'.red);
@@ -47,6 +55,9 @@ client.on('guildMemberRemove', member => {
 
 // This event will run on every single message received, from any channel or DM.
 client.on('message', async message => {
+    
+    const serverQueue = queue.get(message.guild.id);
+
     // Ignores commands from itself and other bots
     if (message.author.bot) {
         return;
@@ -128,6 +139,9 @@ client.on('message', async message => {
         'purge [number]': 'Delete between 2 and 500 messages in a channel. You must be a big boy to do this.',
         invite: 'Get the permanent invite link to the server. This link can be used forever.',
         github: 'Get the link to this bot\'s github repository.',
+        'play [youtube url]': 'Put a song in the song queue. The song will play immediately if there are no songs in queue.',
+        skip: 'Skip a song in the song queue.',
+        stop: 'Delete the song queue and make Chad leave the voice channel.',
     };
 
     // Var used to store mentioned member IDs from a message
@@ -294,10 +308,113 @@ client.on('message', async message => {
         message.reply('https://github.com/ajnatzic/BigBoyBot');
         break;
 
+    // Adds a song to the queue
+    case 'play':
+        execute(message, serverQueue);
+        break;
+
+    // Skips the current song
+    case 'skip':
+        skip(message, serverQueue);
+        break;
+
+    // Stops the music 
+    case 'stop':
+        stop(message, serverQueue);
+        break;
+
     // If the command is not recognized
     default:
         return message.channel.send('Honestly, I have no idea what that means. Use \'?help\' to see the list of commands.');
     }
 });
+
+async function execute(message, serverQueue) {
+    const args = message.content.split(' ');
+
+    const voiceChannel = message.member.voiceChannel;
+    if (!voiceChannel) {
+        return message.channel.send('You need to be in a voice channel to play music!');
+    }
+    const permissions = voiceChannel.permissionsFor(message.client.user);
+    if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
+        return message.channel.send('I need the permissions to join and speak in your voice channel!');
+    }
+
+    const songInfo = await ytdl.getInfo(args[1]);
+    const song = {
+        title: songInfo.title,
+        url: songInfo.video_url,
+    };
+
+    if (!serverQueue) {
+        const queueContruct = {
+            textChannel: message.channel,
+            voiceChannel: voiceChannel,
+            connection: null,
+            songs: [],
+            volume: 5,
+            playing: true,
+        };
+
+        queue.set(message.guild.id, queueContruct);
+
+        queueContruct.songs.push(song);
+
+        try {
+            var connection = await voiceChannel.join();
+            queueContruct.connection = connection;
+            play(message.guild, queueContruct.songs[0]);
+        } catch (err) {
+            console.log(err);
+            queue.delete(message.guild.id);
+            return message.channel.send(err);
+        }
+    } else {
+        serverQueue.songs.push(song);
+        console.log(serverQueue.songs);
+        return message.channel.send(`${song.title} has been added to the queue!`);
+    }
+
+}
+
+function skip(message, serverQueue) {
+    if (!message.member.voiceChannel) {
+        return message.channel.send('You have to be in a voice channel to stop the music!');
+    }
+    if (!serverQueue) {
+        return message.channel.send('There is no song that I could skip!');
+    }
+    serverQueue.connection.dispatcher.end();
+}
+
+function stop(message, serverQueue) {
+    if (!message.member.voiceChannel) {
+        return message.channel.send('You have to be in a voice channel to stop the music!');
+    }
+    serverQueue.songs = [];
+    serverQueue.connection.dispatcher.end();
+}
+
+function play(guild, song) {
+    const serverQueue = queue.get(guild.id);
+
+    if (!song) {
+        serverQueue.voiceChannel.leave();
+        queue.delete(guild.id);
+        return;
+    }
+
+    const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+        .on('end', () => {
+            console.log('Music ended!');
+            serverQueue.songs.shift();
+            play(guild, serverQueue.songs[0]);
+        })
+        .on('error', error => {
+            console.error(error);
+        });
+    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+}
 
 client.login(config.token);

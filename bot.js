@@ -323,6 +323,10 @@ client.on('message', async message => {
         stop(message, serverQueue);
         break;
 
+    case 'pause':
+        pause(message, serverQueue);
+        break;
+
     // If the command is not recognized
     default:
         return message.channel.send('Honestly, I have no idea what that means. Use \'?help\' to see the list of commands.');
@@ -344,6 +348,7 @@ async function execute(message, serverQueue) {
         if(!serverQueue) {
             return message.channel.send('The queue is empty.');
         } else {
+            serverQueue.connection.dispatcher.resume();
             const queueLength = serverQueue.songs.length;
             let queueString = 'The current queue:\n';
             for (let i = 0; i < queueLength; i++) {
@@ -426,6 +431,10 @@ function play(guild, song) {
             console.error(error);
         });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+}
+
+function pause(message, serverQueue) {
+    serverQueue.connection.dispatcher.pause();
 }
 
 client.login(config.token);

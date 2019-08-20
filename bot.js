@@ -1,3 +1,8 @@
+// Require ENV variables
+require('dotenv').config();
+// Create const to store ENV variables
+const ENV = process.env;
+
 // Import discord.js
 // https://discord.js.org/#/
 const Discord = require('discord.js');
@@ -14,12 +19,22 @@ const ytdl = require('ytdl-core');
 // Initialize Discord Bot
 const client = new Discord.Client();
 
-// Checks the authorization key and command prefix
-const config = require('./auth.json');
-
-
 // Map for the song queue
 const queue = new Map();
+
+var search = require('youtube-search');
+ 
+var opts = {
+    maxResults: 10,
+    key: ENV.YT_API_KEY,
+};
+ 
+search('jsconf', opts, function(err, results) {
+    if(err) {
+        return console.log(err);
+    }
+    console.dir(results);
+});
 
 // Print Welcome message
 console.log('Created by AJ Natzic for the Big Boys Club discord server.'.red);
@@ -63,7 +78,7 @@ client.on('message', async message => {
         return;
     }
     // Actions that the bot will execute if the command prefix '?' is not at the beginning of a message (a plain message)
-    if (message.content.indexOf(config.prefix) !== 0) {
+    if (message.content.indexOf(ENV.PREFIX) !== 0) {
     // Get the msg text and convert it to lowercase
         const msgText = message.content.toLowerCase();
         // Get the user mentioned TODO: make it so users mentioned will also get a react
@@ -122,7 +137,7 @@ client.on('message', async message => {
     }
 
     // Separate arguments and commands
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(ENV.PREFIX.length).trim().split(/ +/g);
     // All commands are lowercase, but can be called in discord in uppercase
     const command = args.shift().toLowerCase();
     const commandsList = {
@@ -442,4 +457,4 @@ function pause(message, serverQueue) {
     serverQueue.connection.dispatcher.pause();
 }
 
-client.login(config.token);
+client.login(ENV.DISCORD_TOKEN);

@@ -190,7 +190,7 @@ client.on('message', async message => {
         break;
 
     // Returns the link to a default dance gif, yeehaw
-    case 'default': // Note: NOT the default case, the command is literally called default
+    case 'default': // *Note: NOT the default case, the command is literally called default
         message.channel.send({ files: ['https://cdn.discordapp.com/attachments/553401247948996608/566611034090110977/a3229cf.gif'] });
         break;
 
@@ -333,6 +333,7 @@ client.on('message', async message => {
     }
 });
 
+// Initialize queue and display the queue if requested
 async function execute(message, serverQueue) {
     const args = message.content.split(' ');
 
@@ -394,6 +395,7 @@ async function execute(message, serverQueue) {
 
 }
 
+// Skip a song in the queue
 function skip(message, serverQueue) {
     if (!message.member.voiceChannel) {
         return message.channel.send('You have to be in a voice channel to stop the music!');
@@ -404,6 +406,7 @@ function skip(message, serverQueue) {
     serverQueue.connection.dispatcher.end();
 }
 
+// Stop the music and make Chad leave the voice channel
 function stop(message, serverQueue) {
     if (!message.member.voiceChannel) {
         return message.channel.send('You have to be in a voice channel to stop the music!');
@@ -412,6 +415,7 @@ function stop(message, serverQueue) {
     serverQueue.connection.dispatcher.end();
 }
 
+// Play the music
 function play(guild, song) {
     const serverQueue = queue.get(guild.id);
 
@@ -433,6 +437,7 @@ function play(guild, song) {
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 }
 
+// Pause the music
 function pause(message, serverQueue) {
     serverQueue.connection.dispatcher.pause();
 }

@@ -2,8 +2,9 @@
 ### How to run:
 1. Clone this repository in a preferred directory
 2. Make sure you have node.js installed. Use `node --version` to check https://nodejs.org/en/
-3. Enter your bot token and command prefix into a file called `auth.json`. See the `auth-example.json` file to learn how to get your bot token and how to structure your `auth.json` file.
-4. Run the bot using this command in the repository directory: `node bot.js`
+3. Be sure to run `npm install` in order to install all required dependencies
+4. Enter all required credentials into a .env file. See .env_example
+5. Run the bot using this command in the repository directory: `node bot.js`
 
 ### Commiting to this repository:
 Issues and commits are welcome here. If I'm not responding to a feature request please @ me.

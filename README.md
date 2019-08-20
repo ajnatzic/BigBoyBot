@@ -8,7 +8,8 @@
 ### Commiting to this repository:
 Issues and commits are welcome here. If I'm not responding to a feature request please @ me.
 
-### Resources used: 
+### Resources: 
 * https://www.digitaltrends.com/gaming/how-to-make-a-discord-bot/
 * https://medium.com/davao-js/2019-tutorial-creating-your-first-simple-discord-bot-47fc836a170b
 * https://gist.github.com/eslachance/3349734a98d30011bb202f47342601d3
+* https://gabrieltanner.org/blog/dicord-music-bot

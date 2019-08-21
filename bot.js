@@ -24,17 +24,29 @@ const queue = new Map();
 
 var search = require('youtube-search');
  
+function isValidYouTubeUrl(url) {
+    if (url !== undefined || url !== '') {
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/;
+        var match = url.match(regExp);
+        if (match && match[2].length === 11) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 var opts = {
     maxResults: 10,
     key: ENV.YT_API_KEY,
 };
  
-search('jsconf', opts, function(err, results) {
-    if(err) {
-        return console.log(err);
-    }
-    console.dir(results);
-});
+// search('jsconf', opts, function(err, results) {
+//     if(err) {
+//         return console.log(err);
+//     }
+//     console.dir(results);
+// });
 
 // Print Welcome message
 console.log('Created by AJ Natzic for the Big Boys Club discord server.'.red);
@@ -324,9 +336,22 @@ client.on('message', async message => {
         break;
 
     // Adds a song to the queue. Displays queue if no url detected
-    case 'play':
-        execute(message, serverQueue);
+    case 'play': {
+        const args = message.content.split(' ');
+        if(!isValidYouTubeUrl(args[1])){
+            search('jsconf', opts, function(err, results) {
+                if(err) {
+                    return console.log(err);
+                }
+                args[1] = results[0].link;
+                execute(args, serverQueue);
+                console.dir(results);
+            });
+        } else {
+            execute(message, serverQueue);
+        }
         break;
+    }
 
     // Skips the current song
     case 'skip':

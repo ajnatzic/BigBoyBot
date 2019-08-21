@@ -25,16 +25,16 @@ const queue = new Map();
 var search = require('youtube-search');
  
 var opts = {
-    maxResults: 10,
+    maxResults: 5,
     key: ENV.YT_API_KEY,
 };
  
-search('jsconf', opts, function(err, results) {
-    if(err) {
-        return console.log(err);
-    }
-    console.dir(results);
-});
+// search('jsconf', opts, function(err, results) {
+//     if(err) {
+//         return console.log(err);
+//     }
+//     console.dir(results);
+// });
 
 // Print Welcome message
 console.log('Created by AJ Natzic for the Big Boys Club discord server.'.red);
@@ -341,6 +341,10 @@ client.on('message', async message => {
     case 'pause':
         pause(message, serverQueue);
         break;
+    
+    case 'search':
+        searchResults(message, serverQueue);
+        break;
 
     // If the command is not recognized
     default:
@@ -456,5 +460,199 @@ function play(guild, song) {
 function pause(message, serverQueue) {
     serverQueue.connection.dispatcher.pause();
 }
+async function searchResults(message, serverQueue){
+    /*
+        call 'searchVideos' method to get a list of 5 video objects that match the
+        query. Then create an array of the 5 videos numbered from 1 to 5 with their
+        titles.
+        */
+    const originalAuthor = message.author;
+    const args = message.content.split(' ');
+    search(args[1], opts, function(err, results) {
+        if(err) {
+            return console.log(err);
+        }
+        console.dir(results);
+        let optString = 'Please choose one of these songs:\n\n';
+        for (let i = 0; i < opts.maxResults; i++) {
+            optString += `${i + 1}. ${results[i].title}\n`;
+        }
+        // Array of number emojis
+        const numberEmoji = ['1⃣', '2⃣', '3⃣', '4⃣', '5⃣', '6⃣', '7⃣', '8⃣', '9⃣', '🔟'];
+        // Send message with options and allow user to pick one of the reactions
+        message.channel.send(optString).then(async function(message){
+            // for(let i = 0; i < opts.maxResults; i++) {
+            //     await message.react(numberEmoji[i]);
+            // }
+            // const filter = (reaction, user) => {
+            //     return numberEmoji.includes(reaction.emoji.name);
+            // };
+    
+            // message.awaitReactions(filter, { max: 6, maxUsers: 2, time: 60000, errors: ['time'] })
+            //     .then(collected => {
+            //         const reaction = collected.first();
+    
+            //         if (reaction.emoji === numberEmoji[4]) {
+            //             message.reply('you reacted with number 4 up.');
+            //         } else {
+            //             message.reply('you reacted with a thumbs down.');
+            //         }
+            //     })
+            //     .catch(collected => {
+            //         console.log(`After a minute, only ${collected.size} out of 4 reacted.`);
+            //         message.reply('you didn\'t react with neither a thumbs up, nor a thumbs down.');
+            //     });
+            // const collector = message.createReactionCollector((reaction, user) => 
+            //     user.id === originalAuthor &&
+            //     reaction.emoji.name === numberEmoji[0] ||
+            //     reaction.emoji.name === numberEmoji[0] ||
+            //     reaction.emoji.name === numberEmoji[1] ||
+            //     reaction.emoji.name === numberEmoji[2] ||
+            //     reaction.emoji.name === numberEmoji[3] ||
+            //     reaction.emoji.name === numberEmoji[4] 
+            // ).once('collect', reaction => {
+            //     const chosen = reaction.emoji.name;
+            //     if(chosen === numberEmoji[0]){
+            //         message.channel.send(`${originalAuthor}, You chose ${numberEmoji[0]}`);
+            //     }if(chosen === numberEmoji[1]){
+            //         message.channel.send(`${originalAuthor}, You chose ${numberEmoji[1]}`);
+            //     }if(chosen === numberEmoji[2]){
+            //         message.channel.send(`${originalAuthor}, You chose ${numberEmoji[2]}`);
+            //     }if(chosen === numberEmoji[3]){
+            //         message.channel.send(`${originalAuthor}, You chose ${numberEmoji[3]}`);
+            //     }if(chosen === numberEmoji[4]){
+            //         message.channel.send(`${originalAuthor}, You chose ${numberEmoji[4]}`);
+            //     }
+            //     collector.stop();
+            // });
+            try {
+                /* 
+                assign 'response' variable whatever the user types. The correct
+                responses are numbers between 1-5 or 'exit'. There is also a time limit 
+                of 1 minute to respond.
+                */
+                var response = await message.channel.awaitMessages(
+                    msg => (msg.content > 0 && msg.content < 6) || msg.content === 'exit',
+                    {
+                        max: 1,
+                        maxProcessed: 1,
+                        time: 60000,
+                        errors: ['time'],
+                    }
+                );
+            } catch (err) { // catch errors from 'awaitMessages' and respond correctly
+                console.error(err);
+                return message.channel.send(
+                    'Please try again and enter a number between 1 and 5 or exit'
+                );
+            }
+            if (response.first().content === 'exit') {
+                return message.delete();
+            }
+            // assign videoIndex to the song number the user enters
+            const videoIndex = parseInt(response.first().content - 1);
+            message.channel.send(`Video index: ${videoIndex}`);
+            const videoLink = results[videoIndex].link;
+            message.channel.send(`Video link: ${videoLink}`);
+            message = `?play ${videoLink}`;
+            execute(message, serverQueue);
+        });
+    });
 
+
+
+
+    //     /* construct a message embed that will be displayed to the chat, it 
+    //         contains the song titles fetched using 'searchVideos'.
+    //         */
+    //     const embed = new MessageEmbed()
+    //         .setColor('#e9f931')
+    //         .setTitle('Choose a song by commenting a number between 1 and 5')
+    //         .addField('Song 1', vidNameArr[0])
+    //         .addField('Song 2', vidNameArr[1])
+    //         .addField('Song 3', vidNameArr[2])
+    //         .addField('Song 4', vidNameArr[3])
+    //         .addField('Song 5', vidNameArr[4])
+    //         .addField('Exit', 'exit');
+    //     var songEmbed = await message.say({ embed });
+    //     try {
+    //         /* 
+    //         assign 'response' variable whatever the user types. The correct
+    //         responses are numbers between 1-5 or 'exit'. There is also a time limit 
+    //         of 1 minute to respond.
+    //         */
+    //         var response = await message.channel.awaitMessages(
+    //             msg => (msg.content > 0 && msg.content < 6) || msg.content === 'exit',
+    //             {
+    //                 max: 1,
+    //                 maxProcessed: 1,
+    //                 time: 60000,
+    //                 errors: ['time'],
+    //             }
+    //         );
+    //     } catch (err) { // catch errors from 'awaitMessages' and respond correctly
+    //         console.error(err);
+    //         songEmbed.delete();
+    //         return message.say(
+    //             'Please try again and enter a number between 1 and 5 or exit'
+    //         );
+    //     }
+    //     if (response.first().content === 'exit') {
+    // return songEmbed.delete();
+    // }
+    //     // assign videoIndex to the song number the user enters
+    //     const videoIndex = parseInt(response.first().content);
+    //     try {
+    //         // fetch the video object using 'getVideoByID'
+    //         var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
+    //         if (video.raw.snippet.liveBroadcastContent === 'live') {return message.say('I don\'t support live streams!');
+    // }
+    //     } catch (err) { // catch errors from 'getVideoByID'
+    //         console.error(err);
+    //         songEmbed.delete();
+    //         return message.say(
+    //             'An error has occured when trying to get the video ID from youtube'
+    //         );
+    //     }
+    //     const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
+    //     const title = video.title;
+
+    //     play(message, serverQueue);
+    //     try {
+    //         const song = { // construct the song object
+    //             url,
+    //             title,
+    //             voiceChannel,
+    //         };
+    //         if (queue.length > 6) {
+    //             return message.say(
+    //                 'There are too many songs in the queue already, skip or wait a bit'
+    //             );
+    //         }
+    //         queue.push(song); // push the song object to queue
+    //         if (isPlaying == false || typeof isPlaying === 'undefined') {
+    //             isPlaying = true;
+    //             songEmbed.delete(); // delete the song list embed(so it wont spam chat)
+    //             playSong(queue, message); // play the song
+    //         } else if (isPlaying == true) {
+    //             songEmbed.delete();
+    //             return message.say(`${song.title} added to queue`);
+    //         }
+    //     } catch (err) {
+    //         console.error(err);
+    //         songEmbed.delete();
+    //         return message.say('queue process gone wrong');
+    //     }
+    // } catch (err) { // catch errors from playSong()
+    //     console.error(err);
+    //     if (songEmbed) { // if the songEmbed wasn't deleted because of an error related to playSong() - delete it
+    //         songEmbed.delete();
+    //     }
+    //     return message.say(
+    //         'Something went wrong with searching the video you requested :('
+    //     );
+    // }
+    
+    // });
+}
 client.login(ENV.DISCORD_TOKEN);

@@ -39,6 +39,7 @@ function isValidYouTubeUrl(url) {
 var opts = {
     maxResults: 10,
     key: ENV.YT_API_KEY,
+    type: 'video',
 };
  
 // search('jsconf', opts, function(err, results) {
@@ -166,7 +167,7 @@ client.on('message', async message => {
         'purge [number]': 'Delete between 2 and 500 messages in a channel. You must be a big boy to do this.',
         invite: 'Get the permanent invite link to the server. This link can be used forever.',
         github: 'Get the link to this bot\'s github repository.',
-        'play [youtube url]': 'Put a song in the song queue. The song will play immediately if there are no songs in queue.',
+        'play [song name/youtube url]': 'Put a song in the song queue. The song will play immediately if there are no songs in queue. Type just \'?play\' to show the queue.',
         skip: 'Skip a song in the song queue.',
         stop: 'Delete the song queue and make Chad leave the voice channel.',
     };
@@ -337,15 +338,16 @@ client.on('message', async message => {
 
     // Adds a song to the queue. Displays queue if no url detected
     case 'play': {
-        const args = message.content.split(' ');
-        if(!isValidYouTubeUrl(args[1])){
-            search('jsconf', opts, function(err, results) {
+        let args = message.content.slice(6);
+        if(args !== '' && !isValidYouTubeUrl(args)){
+            search(args, opts, function(err, results) {
                 if(err) {
                     return console.log(err);
                 }
-                args[1] = results[0].link;
-                execute(args, serverQueue);
-                console.dir(results);
+                args = results[0].link;
+                message.content = `?play ${args}`;
+                console.log(typeof message);
+                execute(message, serverQueue);
             });
         } else {
             execute(message, serverQueue);

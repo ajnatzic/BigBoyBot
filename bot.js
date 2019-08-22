@@ -365,6 +365,7 @@ client.on('message', async message => {
         stop(message, serverQueue);
         break;
 
+    // Pause the music
     case 'pause':
         pause(message, serverQueue);
         break;

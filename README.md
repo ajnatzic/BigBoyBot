@@ -1,4 +1,4 @@
-# BigBoyBot
+# Chad
 ### How to run:
 1. Clone this repository in a preferred directory
 2. Make sure you have node.js installed. Use `node --version` to check https://nodejs.org/en/

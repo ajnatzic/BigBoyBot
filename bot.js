@@ -41,13 +41,6 @@ var opts = {
     key: ENV.YT_API_KEY,
     type: 'video',
 };
- 
-// search('jsconf', opts, function(err, results) {
-//     if(err) {
-//         return console.log(err);
-//     }
-//     console.dir(results);
-// });
 
 // Print Welcome message
 console.log('Created by AJ Natzic for the Big Boys Club discord server.'.red);

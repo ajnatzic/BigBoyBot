@@ -17,6 +17,7 @@ const colors = require('colors');
 const ytdl = require('ytdl-core');
 
 // Search var that will allow the bot to search youtube for a song by title
+// https://www.npmjs.com/package/youtube-search
 var search = require('youtube-search');
 
 // Initialize Discord Bot

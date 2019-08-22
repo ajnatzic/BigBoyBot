@@ -16,14 +16,17 @@ const colors = require('colors');
 // https://www.npmjs.com/package/ytdl-core
 const ytdl = require('ytdl-core');
 
+// Search var that will allow the bot to search youtube for a song by title
+var search = require('youtube-search');
+
 // Initialize Discord Bot
 const client = new Discord.Client();
 
 // Map for the song queue
 const queue = new Map();
 
-var search = require('youtube-search');
- 
+
+// Regex that checks if a given url is a valid youtube url
 function isValidYouTubeUrl(url) {
     if (url !== undefined || url !== '') {
         var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\?v=)([^#&?]*).*/;

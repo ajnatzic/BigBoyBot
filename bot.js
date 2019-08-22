@@ -166,6 +166,7 @@ client.on('message', async message => {
         'play [song name/youtube url]': 'Put a song in the song queue. The song will play immediately if there are no songs in queue. Type just \'?play\' to show the queue.',
         skip: 'Skip a song in the song queue.',
         stop: 'Delete the song queue and make Chad leave the voice channel.',
+        pause: 'Pauses the music.',
     };
 
     // Var used to store mentioned member IDs from a message

@@ -345,9 +345,13 @@ client.on('message', async message => {
                 if(err) {
                     return console.log(err);
                 }
-                args = results[0].link;
-                message.content = `?play ${args}`;
-                execute(message, serverQueue);
+                try{
+                    args = results[0].link;
+                    message.content = `?play ${args}`;
+                    execute(message, serverQueue);
+                } catch(err) {
+                    message.channel.send(`Sorry, but I was unable to find this song: '${args}'. Please use a valid link or broaden your search keywords.`);
+                }
             });
         } else {
             execute(message, serverQueue);

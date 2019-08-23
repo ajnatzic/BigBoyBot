@@ -37,6 +37,8 @@ function isValidYouTubeUrl(url) {
         } else {
             return false;
         }
+    } else {
+        return false;
     }
 }
 
@@ -337,6 +339,7 @@ client.on('message', async message => {
     // Adds a song to the queue. Displays queue if no url detected
     case 'play': {
         let args = message.content.slice(6);
+        // If the requested song is not a url, search for it by keyword
         if(args !== '' && !isValidYouTubeUrl(args)){
             search(args, opts, function(err, results) {
                 if(err) {
@@ -344,7 +347,6 @@ client.on('message', async message => {
                 }
                 args = results[0].link;
                 message.content = `?play ${args}`;
-                console.log(typeof message);
                 execute(message, serverQueue);
             });
         } else {

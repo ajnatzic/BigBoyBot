@@ -82,7 +82,7 @@ client.on('guildMemberRemove', member => {
 
 // This event will run on every single message received, from any channel or DM.
 client.on('message', async message => {
-    
+
     const serverQueue = queue.get(message.guild.id);
 
     // Ignores commands from itself and other bots
@@ -170,6 +170,7 @@ client.on('message', async message => {
         skip: 'Skip a song in the song queue.',
         stop: 'Delete the song queue and make Chad leave the voice channel.',
         pause: 'Pauses the music.',
+        'insult [@user]': 'Insults the specified user.'
     };
 
     // Var used to store mentioned member IDs from a message
@@ -364,7 +365,7 @@ client.on('message', async message => {
         skip(message, serverQueue);
         break;
 
-    // Stops the music 
+    // Stops the music
     case 'stop':
         stop(message, serverQueue);
         break;
@@ -372,6 +373,19 @@ client.on('message', async message => {
     // Pause the music
     case 'pause':
         pause(message, serverQueue);
+        break;
+
+    // Insult a specified user
+    case 'insult':
+    member = message.mentions.members.first();
+
+    // If no member is specified, it will insult the author
+    if (!member) {
+        const author = message.member;
+        message.channel.send(`${author} ur bad`);
+    } else {
+        message.channel.send(`${member} ur bad`);
+    }
         break;
 
     // If the command is not recognized

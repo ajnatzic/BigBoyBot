@@ -18,12 +18,12 @@ const ytdl = require('ytdl-core');
 
 // Search var that will allow the bot to search youtube for a song by title
 // https://www.npmjs.com/package/youtube-search
+var search = require('youtube-search');
 
 // Import unirest, used for roast generator
 // https://rapidapi.com/Lakerolmaker/api/insult-generator
 var unirest = require("unirest");
 
-var search = require('youtube-search');
 
 // Initialize Discord Bot
 const client = new Discord.Client();

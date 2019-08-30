@@ -173,7 +173,7 @@ client.on('message', async message => {
         skip: 'Skip a song in the song queue.',
         stop: 'Delete the song queue and make Chad leave the voice channel.',
         pause: 'Pauses the music.',
-        'insult [@user]': 'Insults the specified user.'
+        'roast [@user]': 'Insults the specified user.'
     };
 
     // Var used to store mentioned member IDs from a message
@@ -379,7 +379,7 @@ client.on('message', async message => {
         break;
 
     // Insult a specified user
-    case 'insult':
+    case 'roast':
       member = message.mentions.members.first();
       var req = unirest("GET", "https://lakerolmaker-insult-generator-v1.p.rapidapi.com/");
 

@@ -18,6 +18,9 @@ const ytdl = require('ytdl-core');
 
 // Search var that will allow the bot to search youtube for a song by title
 // https://www.npmjs.com/package/youtube-search
+// Import unirest, used for roast generator
+var unirest = require("unirest");
+
 var search = require('youtube-search');
 
 // Initialize Discord Bot
@@ -377,15 +380,29 @@ client.on('message', async message => {
 
     // Insult a specified user
     case 'insult':
-    member = message.mentions.members.first();
+      member = message.mentions.members.first();
+      var req = unirest("GET", "https://lakerolmaker-insult-generator-v1.p.rapidapi.com/");
 
-    // If no member is specified, it will insult the author
-    if (!member) {
-        const author = message.member;
-        message.channel.send(`${author} ur bad`);
-    } else {
-        message.channel.send(`${member} ur bad`);
-    }
+      req.query({
+      	"mode": "random"
+      });
+
+      req.headers({
+      	"x-rapidapi-host": "lakerolmaker-insult-generator-v1.p.rapidapi.com",
+      	"x-rapidapi-key": "15a2359268msh0de84a0abc0d91fp1d35b5jsnd01ec4e79de9"
+      });
+
+
+      req.end(function (res) {
+      	if (res.error) throw new Error(res.error);
+        // If no member is specified, it will insult the author
+        if (!member) {
+          const author = message.member;
+          message.channel.send(`${author} ${res.body}`);
+        } else {
+          message.channel.send(`${member} ${res.body}`);
+        }
+      });
         break;
 
     // If the command is not recognized

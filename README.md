@@ -1,4 +1,7 @@
-# Chad
+# Features
+As stated in the description, this bot will have an abundance of features. Some of these features include...
+## Roast
+![Roast Example](https://github.com/ajnatzic/Chad/blob/reformat-readme/img/insultexample.PNG?raw=true)
 ### How to run:
 1. Clone this repository in a preferred directory
 2. Make sure you have node.js installed. Use `node --version` to check https://nodejs.org/en/

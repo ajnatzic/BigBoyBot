@@ -21,7 +21,8 @@ const ytdl = require('ytdl-core');
 var search = require('youtube-search');
 
 // Import unirest, used for roast generator
-// https://rapidapi.com/Lakerolmaker/api/insult-generator
+// Unirest: https://www.npmjs.com/package/unirest
+// Roast gen: https://rapidapi.com/Lakerolmaker/api/insult-generator
 var unirest = require('unirest');
 
 

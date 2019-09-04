@@ -22,7 +22,7 @@ var search = require('youtube-search');
 
 // Import unirest, used for roast generator
 // https://rapidapi.com/Lakerolmaker/api/insult-generator
-var unirest = require("unirest");
+var unirest = require('unirest');
 
 
 // Initialize Discord Bot
@@ -383,15 +383,15 @@ client.on('message', async message => {
     // Insult a specified user
     case 'roast':
       member = message.mentions.members.first();
-      var req = unirest("GET", "https://lakerolmaker-insult-generator-v1.p.rapidapi.com/");
+      var req = unirest('GET', 'https://lakerolmaker-insult-generator-v1.p.rapidapi.com/');
 
       req.query({
-      	"mode": "random"
+      	'mode': 'random'
       });
 
       req.headers({
-      	"x-rapidapi-host": "lakerolmaker-insult-generator-v1.p.rapidapi.com",
-      	"x-rapidapi-key": "15a2359268msh0de84a0abc0d91fp1d35b5jsnd01ec4e79de9"
+      	'x-rapidapi-host': 'lakerolmaker-insult-generator-v1.p.rapidapi.com',
+      	'x-rapidapi-key': '15a2359268msh0de84a0abc0d91fp1d35b5jsnd01ec4e79de9'
       });
 
 

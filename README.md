@@ -1,8 +1,11 @@
 # Features
 As stated in the description, this bot will have an abundance of features. Some of these features include...
-## Roast
-![Roast Example](https://github.com/ajnatzic/Chad/blob/reformat-readme/img/insultexample.PNG?raw=true)
+<details>
+  <summary>Roast</summary>
+  <img src="https://github.com/ajnatzic/Chad/blob/reformat-readme/img/insultexample.PNG?raw=true">
 The roast command pulls from an API that includes over 525,000+ randomly generated insults. Thanks to the API provider for making this amazing work of art: https://rapidapi.com/Lakerolmaker/api/insult-generator.
+</details>
+
 ### How to run:
 1. Clone this repository in a preferred directory
 2. Make sure you have node.js installed. Use `node --version` to check https://nodejs.org/en/

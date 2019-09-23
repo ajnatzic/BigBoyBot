@@ -340,7 +340,7 @@ client.on('message', async message => {
 
     // Sends a message that contains the github repository for this bot
     case 'github':
-        message.reply('https://github.com/ajnatzic/BigBoyBot');
+        message.reply('https://github.com/ajnatzic/Chad');
         break;
 
     // Adds a song to the queue. Displays queue if no url detected

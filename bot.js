@@ -102,7 +102,7 @@ client.on('message', async message => {
         // Get the user mentioned TODO: make it so users mentioned will also get a react
         const userMention = message.mentions.members;
         // Check if the message includes 'bot' or 'chad'
-        if (msgText.includes('bot') || msgText.includes('chad') || msgText.includes(userMention)) {
+        if (new RegExp("\\b" + 'bot' + "\\b").test(msgText) || new RegExp("\\b" + 'chad' + "\\b").test(msgText)  || msgText.includes(userMention)) {
             const emoji = message.guild.emojis.find(emoji => emoji.name === 'chad');
             message.react(emoji);
         }

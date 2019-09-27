@@ -102,9 +102,14 @@ client.on('message', async message => {
         // Get the user mentioned TODO: make it so users mentioned will also get a react
         const userMention = message.mentions.members;
         // Check if the message includes 'bot' or 'chad'
-        if (msgText.includes('bot') || msgText.includes('chad') || msgText.includes(userMention)) {
+        if (new RegExp("\\b" + 'bot' + "\\b").test(msgText) || new RegExp("\\b" + 'chad' + "\\b").test(msgText)  || msgText.includes(userMention)) {
             const emoji = message.guild.emojis.find(emoji => emoji.name === 'chad');
             message.react(emoji);
+        }
+        // Check if the message includes 'just'
+        if (new RegExp("\\b" + 'just' + "\\b").test(msgText)) {
+          const emoji = message.guild.emojis.find(emoji => emoji.name === '4Head');
+          message.channel.send(`${emoji}`);
         }
         // Check if the message includes 'aj'
         if (msgText.includes('aj') || msgText.includes(userMention)) {
@@ -340,7 +345,7 @@ client.on('message', async message => {
 
     // Sends a message that contains the github repository for this bot
     case 'github':
-        message.reply('https://github.com/ajnatzic/BigBoyBot');
+        message.reply('https://github.com/ajnatzic/Chad');
         break;
 
     // Adds a song to the queue. Displays queue if no url detected

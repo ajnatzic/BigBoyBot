@@ -194,6 +194,9 @@ client.on('message', async message => {
         for (var key in commandsList) {
             menu += (`?${key} | ${commandsList[key]}\n`);
         }
+        // Delete invocation message
+        message.delete().catch(() => { });
+        // DM message author the help menu
         message.author.send(menu);
         break;
 

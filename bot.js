@@ -189,7 +189,7 @@ client.on('message', async message => {
         for (var key in commandsList) {
             menu += (`?${key} | ${commandsList[key]}\n`);
         }
-        message.channel.send(menu);
+        message.author.send(menu);
         break;
 
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.

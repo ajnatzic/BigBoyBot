@@ -174,7 +174,7 @@ client.on('message', async message => {
         'botcheck [@user]': 'Use this command to see if a user has the \'bot\' role. Use the command by itself to see if you have the bot role.',
         'kick [@user] [kickReason]': 'Use this command to kick someone. You must be one of the biggest boys to do this.',
         'ban [@user] [banReason]': 'Use this command to ban someone. You must be one of the biggest boys to do this.',
-        'purge [number]': 'Delete between 2 and 500 messages in a channel. You must be a big boy to do this.',
+        'purge [number]': 'Delete between 2 and 100 messages in a channel. You must be a big boy to do this.',
         invite: 'Get the permanent invite link to the server. This link can be used forever.',
         github: 'Get the link to this bot\'s github repository.',
         'play [song name/youtube url]': 'Put a song in the song queue. The song will play immediately if there are no songs in queue. Type just \'?play\' to show the queue.',
@@ -331,8 +331,8 @@ client.on('message', async message => {
         }
         // get the delete count, as an actual number.
         const deleteCount = parseInt(args[0], 10);
-        if (!deleteCount || deleteCount < 2 || deleteCount > 500) {
-            return message.reply('Please provide a number between 2 and 500 for the number of messages to delete');
+        if (!deleteCount || deleteCount < 2 || deleteCount > 100) {
+            return message.reply('Please provide a number between 2 and 100 for the number of messages to delete');
         }
         // So we get our messages, and delete them. Simple enough, right?
         const fetched = await message.channel.fetchMessages({ limit: deleteCount });

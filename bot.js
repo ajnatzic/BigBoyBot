@@ -113,8 +113,7 @@ client.on('message', async message => {
         }
         // Check if the message includes 'bruh'
         if (new RegExp("\\b" + 'bruh' + "\\b").test(msgText)) {
-          const emoji = message.guild.emojis.find(emoji => emoji.name === 'joy');
-          message.channel.send(`BRUH ${emoji}${emoji}${emoji}${emoji}`);
+          message.channel.send(`BRUH :joy::joy::joy::joy:`);
         }
         // Check if the message includes 'aj'
         if (msgText.includes('aj') || msgText.includes(userMention)) {

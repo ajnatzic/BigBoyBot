@@ -111,6 +111,11 @@ client.on('message', async message => {
           const emoji = message.guild.emojis.find(emoji => emoji.name === '4Head');
           message.channel.send(`${emoji}`);
         }
+        // Check if the message includes 'bruh'
+        if (new RegExp("\\b" + 'bruh' + "\\b").test(msgText)) {
+          const emoji = message.guild.emojis.find(emoji => emoji.name === 'joy');
+          message.channel.send(`BRUH ${emoji}${emoji}${emoji}${emoji}`);
+        }
         // Check if the message includes 'aj'
         if (msgText.includes('aj') || msgText.includes(userMention)) {
             // An array containing the list of emojis related to aj, change as emojis are added

@@ -330,7 +330,7 @@ client.on('message', async message => {
     // This command removes all messages from all users in the channel, up to 500.
     // This can only be used by Big Boys
     case 'purge': {
-        if (!message.member.roles.some(r => ['Big Boys'].includes(r.name))) {
+        if (!message.member.roles.some(r => ['Big Boys', 'The Biggest Boys'].includes(r.name))) {
             return message.reply('Sorry, you don\'t have permissions to use this!');
         }
         // get the delete count, as an actual number.

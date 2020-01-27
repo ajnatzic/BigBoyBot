@@ -396,17 +396,7 @@ client.on('message', async message => {
     // Insult a specified user
     case 'roast':
       member = message.mentions.members.first();
-      var req = unirest('GET', 'https://lakerolmaker-insult-generator-v1.p.rapidapi.com/');
-
-      req.query({
-      	'mode': 'random'
-      });
-
-      req.headers({
-      	'x-rapidapi-host': 'lakerolmaker-insult-generator-v1.p.rapidapi.com',
-      	'x-rapidapi-key': '15a2359268msh0de84a0abc0d91fp1d35b5jsnd01ec4e79de9'
-      });
-
+      var req = unirest.get('https://insult.mattbas.org/api/insult');
 
       req.end(function (res) {
       	if (res.error) throw new Error(res.error);

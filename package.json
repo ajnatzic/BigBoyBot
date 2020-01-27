@@ -2,6 +2,9 @@
   "name": "greeter-bot",
   "version": "1.0.0",
   "description": "A bot for the Big Boys Club server",
+  "engines": {
+    "node": "10.13.0"
+  },
   "main": "bot.js",
   "author": "AJ Natzic",
   "dependencies": {

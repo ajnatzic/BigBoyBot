@@ -20,11 +20,10 @@ const ytdl = require('ytdl-core');
 // https://www.npmjs.com/package/youtube-search
 var search = require('youtube-search');
 
-// Import unirest, used for roast generator
+// Import unirest, used for roast generator and GET requests
 // Unirest: https://www.npmjs.com/package/unirest
-// Roast gen: https://rapidapi.com/Lakerolmaker/api/insult-generator
+// Roast gen: https://insult.mattbas.org/api
 var unirest = require('unirest');
-
 
 // Initialize Discord Bot
 const client = new Discord.Client();

@@ -20,11 +20,10 @@ const ytdl = require('ytdl-core');
 // https://www.npmjs.com/package/youtube-search
 var search = require('youtube-search');
 
-// Import unirest, used for roast generator
+// Import unirest, used for roast generator and GET requests
 // Unirest: https://www.npmjs.com/package/unirest
-// Roast gen: https://rapidapi.com/Lakerolmaker/api/insult-generator
+// Roast gen: https://insult.mattbas.org/api
 var unirest = require('unirest');
-
 
 // Initialize Discord Bot
 const client = new Discord.Client();
@@ -330,7 +329,7 @@ client.on('message', async message => {
     // This command removes all messages from all users in the channel, up to 500.
     // This can only be used by Big Boys
     case 'purge': {
-        if (!message.member.roles.some(r => ['Big Boys', 'The Biggest Boys'].includes(r.name))) {
+        if (!message.member.roles.some(r => ['The Biggest Boys'].includes(r.name))) {
             return message.reply('Sorry, you don\'t have permissions to use this!');
         }
         // get the delete count, as an actual number.
@@ -396,17 +395,7 @@ client.on('message', async message => {
     // Insult a specified user
     case 'roast':
       member = message.mentions.members.first();
-      var req = unirest('GET', 'https://lakerolmaker-insult-generator-v1.p.rapidapi.com/');
-
-      req.query({
-      	'mode': 'random'
-      });
-
-      req.headers({
-      	'x-rapidapi-host': 'lakerolmaker-insult-generator-v1.p.rapidapi.com',
-      	'x-rapidapi-key': '15a2359268msh0de84a0abc0d91fp1d35b5jsnd01ec4e79de9'
-      });
-
+      var req = unirest.get('https://insult.mattbas.org/api/insult');
 
       req.end(function (res) {
       	if (res.error) throw new Error(res.error);

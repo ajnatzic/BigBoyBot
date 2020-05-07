@@ -190,6 +190,10 @@ client.on('message', async message => {
     // Var used to store mentioned member IDs from a message
     let member;
     switch (command) {
+    // If message content is just a question mark, ignore it.
+    case '':
+      return;
+      break;
     // Gives the user a list of commands as well as a description on how to use them
     case 'help':
         var menu = (`Help menu
@@ -408,10 +412,6 @@ client.on('message', async message => {
         }
       });
         break;
-    // If message content is just a question mark, ignore it.
-    case '':
-      return;
-      break;
     // If the command is not recognized
     default:
         return message.channel.send('Honestly, I have no idea what that means. Use \'?help\' to see the list of commands.');

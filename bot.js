@@ -112,7 +112,7 @@ client.on('message', async message => {
         }
         // Check if the message includes 'bruh'
         if (new RegExp("\\b" + 'bruh' + "\\b").test(msgText)) {
-          message.channel.send(`BRUH :joy::joy::joy::joy:`);
+          message.channel.send(`BRUH :joy::flushed::woozy_face::scream:`);
         }
         // Check if the message includes 'aj'
         if (msgText.includes('aj') || msgText.includes(userMention)) {

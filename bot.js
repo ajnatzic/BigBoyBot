@@ -194,6 +194,10 @@ client.on('message', async message => {
     case '':
       return;
       break;
+    // If message content is another question mark, ignore it
+    case '?':
+      return;
+      break;
     // Gives the user a list of commands as well as a description on how to use them
     case 'help':
         var menu = (`Help menu

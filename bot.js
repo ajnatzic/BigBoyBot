@@ -136,9 +136,9 @@ client.on('message', async message => {
             const emoji = message.guild.emojis.find(emoji => emoji.name === mikeEmojis[random]);
             message.react(emoji);
         }
-        // Check if the message includes 'connor'
-        if (message.content.toLowerCase().includes('connor')) {
-            const emoji = message.guild.emojis.find(emoji => emoji.name === 'ConnorWut');
+        // Check if the message includes 'connor' or 'conner'
+        if (message.content.toLowerCase().includes('connor') || message.content.toLowerCase().includes('conner')) {
+            const emoji = message.guild.emojis.find(emoji => emoji.name === 'ConnerWut');
             message.react(emoji);
         }
         // Check if the message includes 'grant'
@@ -194,8 +194,8 @@ client.on('message', async message => {
     case '':
       return;
       break;
-    // If message content is another question mark, ignore it
-    case '?':
+    // If message content has another question mark, ignore it
+    case command.contains('?'):
       return;
       break;
     // Gives the user a list of commands as well as a description on how to use them

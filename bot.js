@@ -195,7 +195,7 @@ client.on('message', async message => {
       return;
       break;
     // If message content has another question mark, ignore it
-    case command.contains('?'):
+    case '?':
       return;
       break;
     // Gives the user a list of commands as well as a description on how to use them

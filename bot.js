@@ -31,7 +31,7 @@ const client = new Discord.Client();
 // Map for the song queue
 const queue = new Map();
 
-const lib = require('lib')({token: process.env.STDLIB_SECRET_TOKEN});
+// const lib = require('lib')({token: process.env.STDLIB_SECRET_TOKEN});
 const ytSearch = require('yt-search');
 
 
@@ -426,110 +426,110 @@ client.on('message', async message => {
 });
 
 // Initialize queue and display the queue if requested
-// async function execute(message, serverQueue) {
-//     const args = message.content.split(' ');
+async function execute(message, serverQueue) {
+    const args = message.content.split(' ');
 
-//     const voiceChannel = message.member.voiceChannel;
-//     if (!voiceChannel) {
-//         return message.channel.send('You need to be in a voice channel to play music!');
-//     }
-//     const permissions = voiceChannel.permissionsFor(message.client.user);
-//     if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
-//         return message.channel.send('I need the permissions to join and speak in your voice channel!');
-//     }
-//     if (!args[1]) {
-//         if(!serverQueue) {
-//             return message.channel.send('The queue is empty.');
-//         } else {
-//             serverQueue.connection.dispatcher.resume();
-//             const queueLength = serverQueue.songs.length;
-//             let queueString = 'The current queue:\n';
-//             for (let i = 0; i < queueLength; i++) {
-//                 queueString += `${i + 1}. ${serverQueue.songs[i].title}\n`;
-//             }
-//             return message.channel.send(queueString);
-//         }
-//     }
-//     const songInfo = await ytdl.getInfo(args[1]);
-//     const song = {
-//         title: songInfo.title,
-//         url: songInfo.video_url,
-//     };
-
-//     if (!serverQueue) {
-//         const queueContruct = {
-//             textChannel: message.channel,
-//             voiceChannel: voiceChannel,
-//             connection: null,
-//             songs: [],
-//             volume: 5,
-//             playing: true,
-//         };
-
-//         queue.set(message.guild.id, queueContruct);
-
-//         queueContruct.songs.push(song);
-
-//         try {
-//             var connection = await voiceChannel.join();
-//             queueContruct.connection = connection;
-//             play(message.guild, queueContruct.songs[0]);
-//         } catch (err) {
-//             console.log(err);
-//             queue.delete(message.guild.id);
-//             return message.channel.send(err);
-//         }
-//     } else {
-//         serverQueue.songs.push(song);
-//         console.log(serverQueue.songs);
-//         return message.channel.send(`${song.title} has been added to the queue!`);
-//     }
-
-// }
-
-let VOICE_CHANNEL = '546104486557646868'; // Set this to the voice channel of your choice. // Bathroom for now 
-let message = context.params.event.content; TODO: TEMP
-
-if (message.startsWith('!play')) {
-  let searchString = message.split(' ').slice(1).join(' ');
-  
-  try {
-    let youtubeLink;
-    if (!searchString) {
-      return lib.discord.channels['@0.2.0'].messages.create({
-        channel_id: `${context.params.event.channel_id}`,
-        content: `No search string provided!`,
-      });
+    const voiceChannel = message.member.voiceChannel;
+    if (!voiceChannel) {
+        return message.channel.send('You need to be in a voice channel to play music!');
     }
-    if (!searchString.includes('youtube.com')) {
-      let results = await ytSearch(searchString);
-      if (!results?.all?.length) {
-        return lib.discord.channels['@0.2.0'].messages.create({
-          channel_id: `${context.params.event.channel_id}`,
-          content: `No results found for your search string. Please try a different one.`,
-        });
-      }
-      youtubeLink = results.all[0].url;
+    const permissions = voiceChannel.permissionsFor(message.client.user);
+    if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
+        return message.channel.send('I need the permissions to join and speak in your voice channel!');
+    }
+    if (!args[1]) {
+        if(!serverQueue) {
+            return message.channel.send('The queue is empty.');
+        } else {
+            serverQueue.connection.dispatcher.resume();
+            const queueLength = serverQueue.songs.length;
+            let queueString = 'The current queue:\n';
+            for (let i = 0; i < queueLength; i++) {
+                queueString += `${i + 1}. ${serverQueue.songs[i].title}\n`;
+            }
+            return message.channel.send(queueString);
+        }
+    }
+    const songInfo = await ytdl.getInfo(args[1]);
+    const song = {
+        title: songInfo.title,
+        url: songInfo.video_url,
+    };
+
+    if (!serverQueue) {
+        const queueContruct = {
+            textChannel: message.channel,
+            voiceChannel: voiceChannel,
+            connection: null,
+            songs: [],
+            volume: 5,
+            playing: true,
+        };
+
+        queue.set(message.guild.id, queueContruct);
+
+        queueContruct.songs.push(song);
+
+        try {
+            var connection = await voiceChannel.join();
+            queueContruct.connection = connection;
+            play(message.guild, queueContruct.songs[0]);
+        } catch (err) {
+            console.log(err);
+            queue.delete(message.guild.id);
+            return message.channel.send(err);
+        }
     } else {
-      youtubeLink = searchString;
+        serverQueue.songs.push(song);
+        console.log(serverQueue.songs);
+        return message.channel.send(`${song.title} has been added to the queue!`);
     }
-    let downloadInfo = await ytdl.getInfo(youtubeLink);
-    await lib.discord.voice['@0.0.1'].tracks.play({
-      channel_id: `${VOICE_CHANNEL}`,
-      guild_id: `${context.params.event.guild_id}`,
-      download_info: downloadInfo
-    });
-    return lib.discord.channels['@0.2.0'].messages.create({
-      channel_id: `${context.params.event.channel_id}`,
-      content: `Now playing **${downloadInfo.videoDetails.title}**`,
-    });
-  } catch (e) {
-    return lib.discord.channels['@0.2.0'].messages.create({
-      channel_id: `${context.params.event.channel_id}`,
-      content: `Failed to play track!`,
-    });
-  }
+
 }
+
+// let VOICE_CHANNEL = '546104486557646868'; // Set this to the voice channel of your choice. // Bathroom for now 
+// let message = context.params.event.content; TODO: TEMP
+
+// if (message.startsWith('!play')) {
+//   let searchString = message.split(' ').slice(1).join(' ');
+  
+//   try {
+//     let youtubeLink;
+//     if (!searchString) {
+//       return lib.discord.channels['@0.2.0'].messages.create({
+//         channel_id: `${context.params.event.channel_id}`,
+//         content: `No search string provided!`,
+//       });
+//     }
+//     if (!searchString.includes('youtube.com')) {
+//       let results = await ytSearch(searchString);
+//       if (!results?.all?.length) {
+//         return lib.discord.channels['@0.2.0'].messages.create({
+//           channel_id: `${context.params.event.channel_id}`,
+//           content: `No results found for your search string. Please try a different one.`,
+//         });
+//       }
+//       youtubeLink = results.all[0].url;
+//     } else {
+//       youtubeLink = searchString;
+//     }
+//     let downloadInfo = await ytdl.getInfo(youtubeLink);
+//     await lib.discord.voice['@0.0.1'].tracks.play({
+//       channel_id: `${VOICE_CHANNEL}`,
+//       guild_id: `${context.params.event.guild_id}`,
+//       download_info: downloadInfo
+//     });
+//     return lib.discord.channels['@0.2.0'].messages.create({
+//       channel_id: `${context.params.event.channel_id}`,
+//       content: `Now playing **${downloadInfo.videoDetails.title}**`,
+//     });
+//   } catch (e) {
+//     return lib.discord.channels['@0.2.0'].messages.create({
+//       channel_id: `${context.params.event.channel_id}`,
+//       content: `Failed to play track!`,
+//     });
+//   }
+// }
 
 // Skip a song in the queue
 function skip(message, serverQueue) {
@@ -554,7 +554,6 @@ function stop(message, serverQueue) {
 // Play the music
 function play(guild, song) {
     const serverQueue = queue.get(guild.id);
-
     if (!song) {
         serverQueue.voiceChannel.leave();
         queue.delete(guild.id);

@@ -158,6 +158,11 @@ client.on('message', async message => {
             message.channel.send(`${emoji}`);
             message.channel.send('Walter');
         }
+        // Check if the message includes 'sam'
+        if (message.content.toLowerCase().includes('sam')) {
+            const emoji = message.guild.emojis.find(emoji => emoji.name === 'SammoSlammo');
+            message.react(emoji);
+        }
         // Return so that the below commands are not checked (since there's no command prefix)
         return;
     }

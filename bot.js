@@ -405,6 +405,18 @@ client.on('message', async message => {
         pause(message, serverQueue);
         break;
 
+    // Take 3 emojis from one user, smash it into one emoji. Also allow users to input 'smashed' emoji into this command to 'unsmash' it
+    case 'emojiSmash': {
+        const sayMessage = args.join(' ');
+        // Then we delete the command message.
+        message.delete().catch(() => { });
+        // And we get the bot to say something:
+        message.channel.send("ur awful");
+        const emoji = message.guild.emojis.find(emoji => emoji.name === 'PepeLaugh');
+        message.channel.send(`${emoji}`);
+        break;
+    }
+
     // Insult a specified user
     case 'roast':
       member = message.mentions.members.first();

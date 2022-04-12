@@ -1,7 +1,7 @@
 {
   "name": "greeter-bot",
   "version": "1.0.0",
-  "description": "A bot for the Big Boys Club server",
+  "description": "A bot for the Big Boys Club server. This branch is for PackageUpdating.",
   "engines": {
     "node": "10.13.0"
   },

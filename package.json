@@ -1,23 +1,19 @@
 {
   "name": "greeter-bot",
+  "type": "module",
   "version": "1.0.0",
   "description": "A bot for the Big Boys Club server",
   "engines": {
-    "node": "10.13.0"
+    "node": ">=10.13.0"
   },
   "main": "bot.js",
   "author": "AJ Natzic",
   "dependencies": {
     "colors": "^1.3.3",
     "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
-    "discord.js": "^11.5.1",
+    "discord.js": "^14.12.1",
     "dotenv": "^8.1.0",
-    "ffmpeg-binaries": "^4.0.0",
-    "opusscript": "0.0.7",
-    "request": "^2.88.0",
-    "unirest": "^0.6.0",
     "winston": "^3.2.1",
-    "youtube-search": "^1.1.4",
     "ytdl-core": "^0.29.5"
   },
   "devDependencies": {

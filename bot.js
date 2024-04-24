@@ -1,9 +1,8 @@
-// const fs = require('node:fs');
-// const path = require('node:path');
 import { REST, Routes, SlashCommandBuilder } from 'discord.js';
 import { Client, Collection, Events, GatewayIntentBits } from 'discord.js';
-// import TOKEN from './config.json' assert { type: "json" };
 import dotenv from 'dotenv';
+import Discord from 'discord.js';
+import CLIENT_ID from './config.json' assert { type: "json" };
 
 dotenv.config();
 
@@ -42,7 +41,7 @@ try {
 
 
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Discord.Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
 

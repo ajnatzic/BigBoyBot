@@ -3,6 +3,7 @@ import { Client, Collection, Events, GatewayIntentBits } from 'discord.js';
 import dotenv from 'dotenv';
 import Discord from 'discord.js';
 import CLIENT_ID from './config.json' assert { type: "json" };
+import { TextChannel } from 'discord.js';
 
 dotenv.config();
 
@@ -41,7 +42,7 @@ try {
 
 
 
-const client = new Discord.Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Discord.Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
 client.commands = new Collection();
 
@@ -96,9 +97,11 @@ client.on('interactionCreate', async interaction => {
         await interaction.reply('Pong!');
     }
 
-    if (interaction.commandName === 'say') {
-        // const input = interaction.
-        await interaction.reply('Pong!');
+    // if (interaction.commandName === 'say') {
+    //     // const input = interaction.
+    //     await interaction.reply('Pong!');
+    //     const channel = client.channels.cache.get(CLIENT_ID);
+    //     channel.send('epic');  
         // interaction.reply('Please enter more input.').then(() => {
         //     const collectorFilter = m => interaction.user.id === m.author.id;
         
@@ -115,7 +118,21 @@ client.on('interactionCreate', async interaction => {
         //         message.delete().catch(() => { });
         //         // And we get the bot to say something:
         //         interaction.send(sayMessage);
-    }
+    // }
+
+    // Check if the message includes 'michael', 'mikol' or 'mike'
+    // if (TextChannel.lastMessage.content.toLowerCase().includes('michael') || TextChannel.lastMessage.content.toLowerCase().includes('mikol') || TextChannel.lastMessage.content.toLowerCase().includes('mike')) {
+    //     // An array containing the list of emojis related to michael, change as emojis are added
+    //     const mikeEmojis = ['mikeZoinked', 'mikeSleep', 'mikeEZ', 'ProtectorOfVirginity'];
+    //     const min = 0;
+    //     const max = mikeEmojis.length;
+    //     const random = Math.floor(Math.random() * (+max - +min)) + +min;
+    //     // Find a random emoji
+    //     const emoji = message.guild.emojis.find(emoji => emoji.name === mikeEmojis[random]);
+    //     message.react(emoji);
+    //     const channel = client.channels.cache.get(CLIENT_ID);
+    //     channel.send('cool');  
+    // }
 });
 
 client.login(TOKEN);
